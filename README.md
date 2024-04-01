@@ -52,3 +52,6 @@ Follow the steps in https://i3wm.org/docs/repositories.html
 
     How to get windows class https://www.tuxtips.info/linux/how-to-find-applications-window-class-in-i3-window-manager
 Then use the previous apps already configured
+
+To define default browser
+xdg-settings set default-web-browser microsoft-edge.desktop
