@@ -43,6 +43,9 @@ https://github.com/davatorium/rofi/blob/next/INSTALL.md
 Picom
 sudo apt install picom
 
+Flameshot - Screenshot
+sudo apt install flameshot
+
 
 i3 download:
 Follow the steps in https://i3wm.org/docs/repositories.html
