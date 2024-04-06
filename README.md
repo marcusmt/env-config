@@ -35,6 +35,17 @@ mkdir -p ~/.config/polybar/
 after downloading the files:
 chmod +x $HOME/.config/polybar/launch.sh
 
+For the backligh to work, use the following commands:
+sudo nvim /etc/udev/rules.d/backlight.rules
+Paste:
+ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="/usr/bin/chgrp video /sys/class/backlight/intel_backlight/brightness"
+ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="/usr/bin/chmod g+w /sys/class/backlight/intel_backlight/brightness"
+
+And run:
+sudo usermod -aG video $LOGNAME
+
+After just reboot
+
 
 Rofi
 https://github.com/davatorium/rofi/blob/next/INSTALL.md
