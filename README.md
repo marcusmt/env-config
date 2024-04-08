@@ -12,7 +12,7 @@ themes: https://github.com/alacritty/alacritty-theme
 
 
 NeoVim
-https://snapcraft.io/search?q=neovim
+https://snapcraft.io/nvim
 
 
 Download fonts from Nerd Font. They contain icons so it's easy to use
