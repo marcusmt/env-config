@@ -84,11 +84,6 @@ sudo apt install fish -y
 2. Install Fisher for plugins management
 ```shell
 curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
-
-Then the theme
-
-fisher install catppuccin/fish
-fish_config theme save "Catppuccin Frappe"
 ```  
 3. [Install NeoVim](https://snapcraft.io/nvim)
 ```shell
