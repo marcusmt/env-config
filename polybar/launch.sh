@@ -1,15 +1,13 @@
 #!/usr/bin/env bash
 
-# Add this script to your wm startup file.
+xrandr --output eDP-1-1 --mode 1920x1080 --scale 1x1 --primary --pos 0x0 --output HDMI-0 --mode 3840x2160 --pos 3840x0
+# need to sleep to give xrandr time to organize the screen
+sleep 10
+i3-msg restart
 
-DIR="~/.config/polybar"
+polybar-msg cmd quit
 
-# Terminate already running bar instances
-killall -q polybar
+polybar -c $HOME/.config/polybar/config.ini laptop  &
+polybar -c $HOME/.config/polybar/config.ini monitor &
 
-# Wait until the processes have been shut down
-while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
-
-# Launch the bar
-polybar -q laptop  -c "$DIR"/config.ini &
-polybar -q monitor -c "$DIR"/config.ini &
+nitrogen --restore
