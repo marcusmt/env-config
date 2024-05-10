@@ -37,9 +37,11 @@ bindsym $mod+Shift+S exec microsoft-edge
 bindsym $mod+z exec dunstctl set-paused true
 bindsym $mod+Shift+z exec dunstctl set-paused false
 
+bindsym Print exec maim -s -u | xclip -selection clipboard -t image/png -i
+
 # Rofi
 bindsym $mod+d         exec --no-startup-id rofi -show drun -theme $HOME/.config/rofi/config.rasi
-bindsym $mod+Shift+d   exec --no-startup-id rofi -show run -theme $HOME/.config/rofi/config.rasi
+bindsym $mod+Shift+d   exec --no-startup-id rofi -show run  -theme $HOME/.config/rofi/config.rasi
 #bindsym $mod+d exec --no-startup-id dmenu_run
 
 # Control Brightness
