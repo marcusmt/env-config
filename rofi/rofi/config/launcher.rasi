@@ -1,6 +1,6 @@
 configuration {
     show-icons:                     true;
-    display-drun: 		            "";
+    display-drun: 		            "";
     drun-display-format:            "{icon} {name}";
     disable-history:                false;
     click-to-exit: 		            true;
@@ -17,7 +17,7 @@ window {
     border:                         2px;
     border-color:                   @BDR;
     border-radius:                  10px;
-    width:                          30%;
+    width:                          500px;
     anchor:                         center;
     x-offset:                       0;
     y-offset:                       0;
@@ -32,18 +32,18 @@ prompt {
 
 textbox-prompt-colon {
     expand: 			            false;
-    str: 			                "";
+    str: 			                "";
     border-radius:                  100%;
-    background-color:               @BG;
-    text-color:                     #ffb86c;
+    background-color:               @SEL;
+    text-color:                     @FG;
     padding:                        8px 12px 8px 12px;
     font:			                "Hack Nerd Font 10";
 }
 
 entry {
     background-color:               @BG;
-    text-color:                     @SEL;
-    placeholder-color:              @SEL;
+    text-color:                     @FG;
+    placeholder-color:              @FG;
     expand:                         true;
     horizontal-align:               0;
     placeholder:                    "Search...";

@@ -1,22 +1,121 @@
 [global]
+    ### Display ###
+
+    # Which monitor should the notifications be displayed on.
+    monitor = 0
+
+    # Display notification on focused monitor.  Possible modes are:
+    #   mouse: follow mouse pointer
+    #   keyboard: follow window with keyboard focus
+    #   none: don't follow anything
+    #
+    # "keyboard" needs a window manager that exports the
+    # _NET_ACTIVE_WINDOW property.
+    # This should be the case for almost all modern window managers.
+    #''
+    # If this option is set to mouse or keyboard, the monitor option
+    # will be ignored.
     follow = mouse
-    origin = top-right
-    scale = 0
-    notification_limit = 0
-    progress_bar = false
+
+    # The geometry of the window:
+    #   [{width}]x{height}[+/-{x}+/-{y}]
+    # The geometry of the message window.
+    # The height is measured in number of notifications everything else
+    # in pixels.  If the width is omitted but the height is given
+    # ("-geometry x2"), the message window expands over the whole screen
+    # (dmenu-like).  If width is 0, the window expands to the longest
+    # message displayed.  A positive x is measured from the left, a
+    # negative from the right side of the screen.  Y is measured from
+    # the top and down respectively.
+    # The width can be negative.  In this case the actual width is the
+    # screen width minus the width defined in within the geometry option.
+    geometry = "300x5-30+20"
+
+    # Show how many messages are currently hidden (because of geometry).
+    indicate_hidden = yes
+
+    # Shrink window if it's smaller than the width.  Will be ignored if
+    # width is 0.
+    shrink = no
+
+    # The transparency of the window.  Range: [0; 100].
+    # This option will only work if a compositing window manager is
+    # present (e.g. xcompmgr, compiz, etc.).
+    transparency = 0
+
+    # The height of the entire notification.  If the height is smaller
+    # than the font height and padding combined, it will be raised
+    # to the font height and padding.
+    notification_height = 0
+
+    # Draw a line of "separator_height" pixel height between two
+    # notifications.
+    # Set to 0 to disable.
     separator_height = 2
+
+    # Padding between text and separator.
     padding = 8
-    horizontal_padding = 10
-    text_icon_padding = 0
-    frame_width = 1
-    frame_color = "#282a36"
+
+    # Horizontal padding.
+    horizontal_padding = 8
+
+    # Defines width in pixels of frame around the notification window.
+    # Set to 0 to disable.
+    frame_width = 3
+
+    # Defines color of the frame around the notification window.
+    frame_color = "#8caaee"
+
+    # Define a color for the separator.
+    # possible values are:
+    #  * auto: dunst tries to find a color fitting to the background;
+    #  * foreground: use the same color as the foreground;
+    #  * frame: use the same color as the frame;
+    #  * anything else will be interpreted as a X color.
     separator_color = frame
+
+    # Sort messages by urgency.
     sort = yes
+
+    # Don't remove messages, if the user is idle (no mouse or keyboard input)
+    # for longer than idle_threshold seconds.
+    # Set to 0 to disable.
+    # A client can set the 'transient' hint to bypass this. See the rules
+    # section for how to disable this if necessary
     idle_threshold = 120
+
+    ### Text ###
+
     font = Hack Nerd Font 8
+
+    # The spacing between lines.  If the height is smaller than the
+    # font height, it will get raised to the font height.
     line_height = 0
+
+    # Possible values are:
+    # full: Allow a small subset of html markup in notifications:
+    #        <b>bold</b>
+    #        <i>italic</i>
+    #        <s>strikethrough</s>
+    #        <u>underline</u>
+    #
+    #        For a complete reference see
+    #        <https://developer.gnome.org/pango/stable/pango-Markup.html>.
+    #
+    # strip: This setting is provided for compatibility with some broken
+    #        clients that send markup even though it's not enabled on the
+    #        server. Dunst will try to strip the markup but the parsing is
+    #        simplistic so using this option outside of matching rules for
+    #        specific applications *IS GREATLY DISCOURAGED*.
+    #
+    # no:    Disable markup parsing, incoming notifications will be treated as
+    #        plain text. Dunst will not advertise that it has the body-markup
+    #        capability if this is set as a global setting.
+    #
+    # It's important to note that markup inside the format option will be parsed
+    # regardless of what this is set to.
     markup = full
-    geometry = "600x600-30+20"
+
     # The format of the message.  Possible variables are:
     #   %a  appname
     #   %s  summary
@@ -27,7 +126,7 @@
     #   %n  progress value if set without any extra characters
     #   %%  Literal %
     # Markup is allowed
-    format = "%s %p\n%b"
+    format = "<b>%s</b>\n%b\n%p"
 
     # Alignment of message text.
     # Possible values are "left", "center" and "right".
@@ -37,9 +136,16 @@
     # Possible values are "top", "center" and "bottom".
     vertical_alignment = center
 
+    # Show age of message if message is older than show_age_threshold
+    # seconds.
+    # Set to -1 to disable.
     show_age_threshold = 60
 
-    # Specify where to make an ellipsis in long lines.
+    # Split notifications into multiple lines if they don't fit into
+    # geometry.
+    word_wrap = yes
+
+    # When word_wrap is set to no, specify where to make an ellipsis in long lines.
     # Possible values are "start", "middle" and "end".
     ellipsize = middle
 
@@ -47,7 +153,7 @@
     ignore_newline = no
 
     # Stack together notifications with the same content
-    stack_duplicates = false
+    stack_duplicates = true
 
     # Hide the count of stacked notifications with the same content
     hide_duplicate_count = false
@@ -66,10 +172,10 @@
     min_icon_size = 0
 
     # Scale larger icons down to this size, set to 0 to disable
-    max_icon_size = 64
+    max_icon_size = 32
 
     # Paths to default icons.
-    icon_path =/home/marcus/.icons/Dracula
+    icon_path = /usr/share/icons/breeze/status/16:/usr/share/icons/breeze/devices/16
 
     ### History ###
 
@@ -86,15 +192,37 @@
     dmenu = /usr/bin/dmenu -p dunst:
 
     # Browser for opening urls in context menu.
-    browser = /usr/bin/microsoft-edge -new-tab
+    browser = /usr/bin/microsoft-edge
 
     # Always run rule-defined scripts, even if the notification is suppressed
     always_run_script = true
 
+    # Define the title of the windows spawned by dunst
+    title = Dunst
+
     # Define the class of the windows spawned by dunst
     class = Dunst
 
-    corner_radius = 0
+    # Print a notification on startup.
+    # This is mainly for error detection, since dbus (re-)starts dunst
+    # automatically after a crash.
+    startup_notification = false
+
+    # Manage dunst's desire for talking
+    # Can be one of the following values:
+    #  crit: Critical features. Dunst aborts
+    #  warn: Only non-fatal warnings
+    #  mesg: Important Messages
+    #  info: all unimportant stuff
+    # debug: all less than unimportant stuff
+    verbosity = mesg
+
+    # Define the corner radius of the notification window
+    # in pixel size. If the radius is 0, you have no rounded
+    # corners.
+    # The radius will be automatically lowered if it exceeds half of the
+    # notification height to avoid clipping text and/or icons.
+    corner_radius = 18
 
     # Ignore the dbus closeNotification message.
     # Useful to enforce the timeout set by dunst configuration. Without this
@@ -114,22 +242,35 @@
     # layout changes.
     force_xinerama = false
 
+    ### mouse
+
+    # Defines list of actions for each mouse event
+    # Possible values are:
+    # * none: Don't do anything.
+    # * do_action: If the notification has exactly one action, or one is marked as default,
+    #              invoke it. If there are multiple and no default, open the context menu.
+    # * close_current: Close current notification.
+    # * close_all: Close all notifications.
+    # These values can be strung together for each mouse event, and
+    # will be executed in sequence.
     mouse_left_click = close_current
     mouse_middle_click = do_action, close_current
     mouse_right_click = close_all
 
 [urgency_low]
-    background = "#282a36"
-    foreground = "#6272a4"
+    # IMPORTANT: colors have to be defined in quotation marks.
+    # Otherwise the "#" and following would be interpreted as a comment.
+    background = "#303446"
+    foreground = "#c6d0f5"
     timeout = 10
 
 [urgency_normal]
-    background = "#282a36"
-    foreground = "#bd93f9"
+    background = "#303446"
+    foreground = "#c6d0f5"
     timeout = 10
 
 [urgency_critical]
-    background = "#ff5555"
-    foreground = "#f8f8f2"
-    frame_color = "#ff5555"
+    background = "#303446"
+    foreground = "#c6d0f5"
+    frame_color = "#ef9f76"
     timeout = 0
