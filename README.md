@@ -29,7 +29,7 @@ sudo apt update -y
 sudo apt upgrade -y
 sudo ubuntu-drivers install
 sudo add-apt-repository universe
-sudo apt install libfuse2 curl build-essential arandr fzf rofi maim xclip-y
+sudo apt install libfuse2 curl build-essential arandr fzf rofi maim xclip cbatticon -y
 sudo snap install nvim --classic
 sudo apt autoremove -y
 ```  

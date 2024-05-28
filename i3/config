@@ -16,6 +16,7 @@ set $ws5 "5: Personal"
 exec --no-startup-id $HOME/.config/polybar/polybar.sh
 exec --no-startup-id picom -b --config $HOME/.config/picom/picom.conf
 exec --no-startup-id feh --bg-scale Pictures/lofi-night-city-3840x2160-14857.jpg
+exec --no-startup-id cbatticon -i 'standard' -u 120
 
 # ---------------------|
 # ======Commands=======|
