@@ -29,9 +29,10 @@ sudo apt update -y
 sudo apt upgrade -y
 sudo ubuntu-drivers install
 sudo add-apt-repository universe
-sudo apt install libfuse2 curl build-essential arandr fzf rofi maim xclip cbatticon -y
+sudo apt install libfuse2 curl build-essential arandr fzf rofi maim xclip cbatticon blueman pasystray lxappearance -y
 sudo snap install nvim --classic
 sudo apt autoremove -y
+snap-store --quit && sudo snap refresh snap-store
 ```  
 
 2. [Install a Nerd Font to have icons included](https://www.nerdfonts.com/font-downloads)
@@ -50,16 +51,17 @@ echo "deb http://debian.sur5r.net/i3/ $(grep '^DISTRIB_CODENAME=' /etc/lsb-relea
 sudo apt update
 sudo apt install i3 -y
 rm -rf keyring.deb
-sudp apt remove dunst
+sudo apt remove dunst
 sudo apt autoremove -y
 echo "Xft.dpi: 192" | tee .Xresources
 ```  
 
 4. [Install Alacritty](https://github.com/alacritty/alacritty/blob/master/INSTALL.md)
 ```shell
+sudo add-apt-repository ppa:git-core/ppa
 sudo apt-add-repository ppa:fish-shell/release-3
 sudo apt update
-sudo apt install fish
+sudo apt install fish git -y
 curl -sS https://starship.rs/install.sh | sh
 ```  
 
