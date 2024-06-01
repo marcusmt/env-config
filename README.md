@@ -7,7 +7,7 @@
 Everything is based on my taste and preferences so follow it on your own risk!  
 
 ## Environment
-- Kubuntu 22.04 (I prefer Fedora but I have to use Ubuntu because of my work environment...)
+- Ubuntu 22.04 (I prefer Fedora but I have to use Ubuntu because of my work environment...)
 - i3WM
     - Rofi
     - Polybar
@@ -78,3 +78,9 @@ curl -sS https://starship.rs/install.sh | sh
 8. Eye candy stuff:
     - https://github.com/catppuccin
     - Walpapper https://4kwallpapers.com/fantasy/lofi-night-city-14857.html
+
+9. Coding IA
+    - Download https://ollama.com/download
+    - Install the model from https://qwen.readthedocs.io/en/latest/run_locally/ollama.html
+    - Install the Extension for Jetbrains (available for VSCode as well): https://plugins.jetbrains.com/plugin/22707-continue
+        - Guide for configuration https://docs.continue.dev/intro
