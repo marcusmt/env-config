@@ -1,0 +1,43 @@
+include $HOME/.config/i3/default_config
+
+# ---------------------|
+# ======Variables======|
+# ---------------------|
+set $mod Mod4
+set $ws1 "1: Laptop"
+set $ws2 "2: Monitor"
+set $ws3 "3: Coding"
+set $ws4 "4: Connect"
+set $ws5 "5: Personal"
+
+# ---------------------|
+# =======Startup=======|
+# ---------------------|
+exec --no-startup-id dex --autostart --environment i3
+#exec --no-startup-id $HOME/.config/polybar/polybar.sh
+exec --no-startup-id picom -b --config $HOME/.config/picom/picom.conf
+#exec --no-startup-id feh --bg-scale Pictures/lofi-night-city-3840x2160-14857.jpg
+
+# ---------------------|
+# ======Commands=======|
+# ---------------------|
+# Lock Screen with GDM
+bindsym $mod+t exec --no-startup-id qdbus --system org.freedesktop.DisplayManager /org/freedesktop/DisplayManager/Seat0 org.freedesktop.DisplayManager.Seat.SwitchToGreeter
+
+# Home Screen Setup
+bindsym $mod+Control+2 exec --no-startup-id $HOME/.screenlayout/dual.sh
+
+# Terminal
+bindsym $mod+Return exec alacritty
+
+# Browser
+bindsym $mod+a exec google-chrome
+
+bindsym $mod+z exec dunstctl set-paused true
+bindsym $mod+Shift+z exec dunstctl set-paused false
+
+# Rofi
+#bindsym $mod+d exec --no-startup-id $HOME/.config/rofi/bin/launcher
+#bindsym $mod+c exec --no-startup-id $HOME/.config/rofi/bin/runner
+#bindsym $mod+s exec --no-startup-id $HOME/.config/rofi/bin/screenshot
+bindsym $mod+d exec --no-startup-id dmenu_run

@@ -1,14 +1,11 @@
-exec --no-startup-id dex --autostart --environment i3
-
 font pango:Hack Nerd Font 0
 
 workspace $ws1 output primary
 
 # No title on window
-default_border pixel 2
-for_window [class=.*] border pixel 2
-default_floating_border pixel 2
-popup_during_fullscreen smart
+default_border pixel 0
+for_window [class=.*] border pixel 0
+default_floating_border pixel
 
 # Default Gaps
 gaps inner 6
@@ -30,9 +27,10 @@ bindsym $mod+w layout tabbed
 bindsym $mod+Shift+h move scratchpad
 bindsym $mod+minus scratchpad show
 
-bindsym XF86AudioRaiseVolume  exec --no-startup-id $HOME/.config/i3/media_control.sh volume_up
-bindsym XF86AudioLowerVolume  exec --no-startup-id $HOME/.config/i3/media_control.sh volume_down
-bindsym XF86AudioMute         exec --no-startup-id $HOME/.config/i3/media_control.sh volume_mute
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
 bindsym XF86MonBrightnessUp   exec --no-startup-id $HOME/.config/i3/media_control.sh brightness_up
 bindsym XF86MonBrightnessDown exec --no-startup-id $HOME/.config/i3/media_control.sh brightness_down
 
@@ -79,4 +77,3 @@ mode "resize" {
         bindsym Right resize grow width 10 px or 10 ppt
         bindsym Escape mode "default"
 }
-
