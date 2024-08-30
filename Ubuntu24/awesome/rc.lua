@@ -130,8 +130,8 @@ awful.screen.connect_for_each_screen(function(s)
         {             -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             s.mytasklist,
-            wibox.widget.systray(),
             mytextclock,
+            wibox.widget.systray()
         },
     }
 end)
@@ -151,27 +151,27 @@ globalkeys = gears.table.join(
 
     awful.key({ modkey, }, "Left",
         function()
-            awful.client.focus.byidx(1)
+            awful.client.focus.byidx(-1)
         end,
         { description = "focus next by index", group = "client" }
     ),
 
     awful.key({ modkey, }, "Right",
         function()
-            awful.client.focus.byidx(-1)
+            awful.client.focus.byidx(1)
         end,
         { description = "focus previous by index", group = "client" }
     ),
 
     awful.key({ modkey, "Shift" }, "Left",
         function()
-            awful.client.swap.byidx(1)
+            awful.client.swap.byidx(-1)
         end,
         { description = "swap with next client by index", group = "client" }),
 
     awful.key({ modkey, "Shift" }, "Right",
         function()
-            awful.client.swap.byidx(-1)
+            awful.client.swap.byidx(1)
         end,
         { description = "swap with previous client by index", group = "client" }),
 
@@ -185,8 +185,10 @@ globalkeys = gears.table.join(
     awful.key({ modkey, }, "Return", function() awful.spawn(terminal) end,
         { description = "open a terminal", group = "launcher" }),
 
-    awful.key({ modkey, "Control" }, "r", awesome.restart,
-        { description = "reload awesome", group = "awesome" }),
+    awful.key({ modkey, "Control" }, "r",
+        awesome.restart,
+        { description = "reload awesome", group = "awesome" }
+    ),
 
     awful.key({ modkey, "Shift" }, "e", awesome.quit,
         { description = "quit awesome", group = "awesome" }),
@@ -209,12 +211,30 @@ globalkeys = gears.table.join(
     awful.key({ modkey }, "r", function() awful.screen.focused().mypromptbox:run() end,
         { description = "run prompt", group = "launcher" }),
 
-    awful.key({ modkey }, "p", function() menubar.show() end,
+    awful.key({ modkey }, "d", function() menubar.show() end,
         { description = "show the menubar", group = "launcher" }),
     awful.key({ modkey, "Control" }, "Up", function() awful.tag.incnmaster(1, nil, true) end,
         { description = "increase the number of master clients", group = "layout" }),
     awful.key({ modkey, "Control" }, "Down", function() awful.tag.incnmaster(-1, nil, true) end,
-        { description = "decrease the number of master clients", group = "layout" })
+        { description = "decrease the number of master clients", group = "layout" }),
+    awful.key({}, "Print", function () awful.spawn("flameshot gui") end,
+        { description = "take screenshots", group = "layout" }
+    ),
+    awful.key({}, "XF86AudioRaiseVolume", function () awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ +10%") end,
+        { description = "take screenshots", group = "layout" }
+    ),
+    awful.key({}, "XF86AudioLowerVolume", function ()
+        awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ -10%")
+        awful.spawn.easy_async_with_shell("pactl get-sink-volume @DEFAULT_SINK@ | grep -Po '[0-9]{1,3}(?=%)' | head -1", function(stdout)
+            naughty.notify({
+                preset = naughty.config.presets.critical,
+                title = "Vol Icon",
+                text = stdout
+            })
+        end)
+    end,
+        { description = "take screenshots", group = "layout" }
+    )
 )
 
 clientkeys = gears.table.join(
@@ -450,7 +470,9 @@ client.connect_signal("manage", function(c)
     end
 end)
 
-awful.util.spawn("nm-applet")
-awful.util.spawn("blueman-applet")
-awful.spawn(terminal .. " -e pkill -f pasystray && pasystray")
-awful.util.spawn("flameshot")
+awful.spawn.with_shell("/home/marcus/.screenlayout/dual_home.sh")
+awful.spawn.with_shell("nm-applet")
+awful.spawn.with_shell("blueman-applet")
+awful.spawn.with_shell("pkill -f pasystray")
+awful.spawn.with_shell("pasystray")
+awful.spawn.with_shell("flameshot")
