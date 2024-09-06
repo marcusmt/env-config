@@ -43,6 +43,7 @@ pasystray \
 brightnessctl \
 libfuse2 \
 flameshot \
+thunar \
 awesome -y
 curl -sS https://starship.rs/install.sh | sh
 sudo snap install nvim --classic

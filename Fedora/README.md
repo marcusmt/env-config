@@ -3,7 +3,8 @@
 2. What to do after installing Fedora i3 Spin
 3. AwesomeWM customisation
 
-Everything is based on my taste and preferences so follow it on your own risk!  
+Everything is based on my taste and preferences so follow it on your own risk!
+Fedora setup below is using Nvidia driver which requires a lot of restarts.
 
 ## Environment
 - Fedora 40
@@ -19,53 +20,57 @@ Everything is based on my taste and preferences so follow it on your own risk!
 ## What to do after installing FEdora
 1. Update to the latest packages and then reboot
 ```shell
-sudo dnf upgrade
+sudo dnf upgrade -y
 ```  
 
-2. Install Nvidia drivers and configure it. Then reboot
+2. Install Nvidia drivers. Then reboot. After the restart, configure nvidia in the nvidia-settings software and reboot again.
 ```shell
 sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-sudo dnf config-manager --enable fedora-cisco-openh264
+sudo dnf upgrade -y
 sudo dnf install akmod-nvidia \
 xorg-x11-drv-nvidia-cuda \
 nvidia-vaapi-driver \
 libva-utils \
-vdpauinfo
+vdpauinfo -y
 sudo akmods --force
 sudo dracut --force
-echo "Xft.dpi: 192" | tee .Xresources
-```  
+```
 
-3. Open the nvidia-settings and configure the monitors accordingly then copy the default config
 ```shell
 sudo cp -p /usr/share/X11/xorg.conf.d/nvidia.conf /etc/X11/xorg.conf.d/nvidia.conf
-```  
-
-then paste the configuration from nvidia-settings into it adding the folling line to the OutputClass section of it.:
-
-```shell
+then add the property below in Section "OutputClass"
 Option "PrimaryGPU" "yes"
-```  
+```
 
-reboot again to make the settings available
-
-4. Install the needed packages
+4. Install the needed packages then roboot
 ```shell
+wget -O code.rpm "https://code.visualstudio.com/sha/download?build=stable&os=linux-rpm-x64"
+sudo dnf install ./code.rpm -y
+rm -rf code.rpm
+
 sudo dnf install git \
 fish \
 alacritty \
 blueman \
-pasystray \
 picom \
 polybar \
 rofi \
-neovim -y
+neovim \
+pasystray \
+dunst \
+arandr \
+flameshot \
+feh \
+thunar \
+i3 -y
+
 curl -sS https://starship.rs/install.sh | sh
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Hack.zip
 mkdir ~/.fonts
 unzip Hack.zip -d ~/.fonts
 fc-cache -fv
 rm Hack.zip
+echo "Xft.dpi: 192" | tee .Xresources
 ```  
 
 5. Eye candy stuff:
