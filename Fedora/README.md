@@ -26,6 +26,7 @@ sudo dnf upgrade -y
 2. Install Nvidia drivers. Then reboot. After the restart, configure nvidia in the nvidia-settings software and reboot again.
 ```shell
 sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
 sudo dnf upgrade -y
 sudo dnf install akmod-nvidia \
 xorg-x11-drv-nvidia-cuda \
@@ -34,26 +35,32 @@ libva-utils \
 vdpauinfo -y
 sudo akmods --force
 sudo dracut --force
-```
+echo "#This file is provided by xorg-x11-drv-nvidia
+#Do not edit
 
-```shell
-sudo cp -p /usr/share/X11/xorg.conf.d/nvidia.conf /etc/X11/xorg.conf.d/nvidia.conf
-then add the property below in Section "OutputClass"
-Option "PrimaryGPU" "yes"
+Section "OutputClass"
+	Identifier "nvidia"
+	MatchDriver "nvidia-drm"
+	Driver "nvidia"
+	Option "AllowEmptyInitialConfiguration"
+	Option "SLI" "Auto"
+	Option "BaseMosaic" "on"
+	Option "PrimaryGPU" "yes"
+EndSection
+
+Section "ServerLayout"
+	Identifier "layout"
+	Option "AllowNVIDIAGPUScreens"
+EndSection" | tee /etc/X11/xorg.conf.d/nvidia.conf
 ```
 
 4. Install the needed packages then roboot
 ```shell
-wget -O code.rpm "https://code.visualstudio.com/sha/download?build=stable&os=linux-rpm-x64"
-sudo dnf install ./code.rpm -y
-rm -rf code.rpm
-
 sudo dnf install git \
 fish \
 alacritty \
 blueman \
 picom \
-polybar \
 rofi \
 neovim \
 pasystray \
@@ -62,6 +69,7 @@ arandr \
 flameshot \
 feh \
 thunar \
+code \
 i3 -y
 
 curl -sS https://starship.rs/install.sh | sh
@@ -70,13 +78,48 @@ mkdir ~/.fonts
 unzip Hack.zip -d ~/.fonts
 fc-cache -fv
 rm Hack.zip
-echo "Xft.dpi: 192" | tee .Xresources
+echo "Xft.dpi: 192
+
+*background: #1e1e2e
+*foreground: #cdd6f4
+*cursorColor: #f5e0dc
+
+! black
+*color0: #45475a
+*color8: #585b70
+
+! red
+*color1: #f38ba8
+*color9: #f38ba8
+
+! green
+*color2: #a6e3a1
+*color10: #a6e3a1
+
+! yellow
+*color3: #f9e2af
+*color11: #f9e2af
+
+! blue
+*color4: #89b4fa
+*color12: #89b4fa
+
+! magenta
+*color5: #f5c2e7
+*color13: #f5c2e7
+
+! cyan
+*color6: #94e2d5
+*color14: #94e2d5
+
+! white
+*color7: #bac2de
+*color15: #a6adc8" | tee .Xresources
 ```  
 
 5. Eye candy stuff:
-    - Themes from Dracula: https://draculatheme.com/
-    - When installing GTK, put everything in the .config folder as well: https://draculatheme.com/gtk
-    - Walpapper https://4kwallpapers.com/fantasy/lofi-night-city-14857.html
+    - Catppucchin themes https://github.com/catppuccin
+    - Walpapper https://www.pexels.com/photo/rock-formation-close-up-photography-2646237/
 
 6. Coding AI
     - Download https://ollama.com/download
