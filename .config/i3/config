@@ -3,8 +3,11 @@ set $mod Mod4
 
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id nm-applet
+exec --no-startup-id blueman-applet
+exec --no-startup-id pasystray
+exec --no-startup-id flameshot
 exec_always --no-startup-id picom -b --config $HOME/.config/picom/picom.conf
-exec_always --no-startup-id feh --bg-scale $HOME/Pictures/wall2.jpg
+exec_always --no-startup-id feh --bg-scale $HOME/Pictures/wall.jpg
 
 gaps inner 6
 popup_during_fullscreen smart
@@ -17,17 +20,28 @@ default_border pixel 0
 for_window [class=.*] border pixel 0
 default_floating_border pixel 0
 
-bindsym $mod+Shift+Up exec --no-startup-id $HOME/.config/i3/single.sh
-bindsym $mod+Shift+Down exec --no-startup-id $HOME/.config/i3/dual.sh
-#bindsym $mod+d exec --no-startup-id dmenu_run
+bindsym $mod+Shift+Down exec --no-startup-id $HOME/.config/i3/single.sh
+bindsym $mod+Shift+Up exec --no-startup-id $HOME/.config/i3/dual.sh
+
+# Move the current workspace to the next output
+# (effectively toggles when you only have two outputs)
+bindsym $mod+x move workspace to output next
+
 # Rofi
 bindsym $mod+d exec --no-startup-id $HOME/.config/rofi/bin/launcher
 bindsym $mod+c exec --no-startup-id $HOME/.config/rofi/bin/runner
+#bindsym $mod+d exec --no-startup-id dmenu_run
 
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Exit?' -B 'Yes, exit i3' 'i3-msg exit'"
 
 bindsym $mod+z exec dunstctl set-paused true
 bindsym $mod+Shift+z exec dunstctl set-paused false
+
+# Make the currently focused window a scratchpad
+bindsym $mod+minus move scratchpad
+
+# Show the first scratchpad window
+bindsym $mod+Shift+minus scratchpad show
 
 # change container layout (tabbed, toggle split)
 bindsym $mod+w fullscreen toggle
