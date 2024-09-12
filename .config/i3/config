@@ -6,6 +6,7 @@ exec --no-startup-id nm-applet
 exec --no-startup-id blueman-applet
 exec --no-startup-id pasystray
 exec --no-startup-id flameshot
+exec --no-startup-id cbatticon
 exec_always --no-startup-id picom -b --config $HOME/.config/picom/picom.conf
 exec_always --no-startup-id feh --bg-scale $HOME/Pictures/wall.jpg
 
@@ -14,7 +15,6 @@ popup_during_fullscreen smart
 focus_wrapping workspace
 focus_follows_mouse no
 no_focus [all]
-focus_on_window_activation none
 
 default_border pixel 0
 for_window [class=.*] border pixel 0

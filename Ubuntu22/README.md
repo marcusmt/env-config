@@ -31,11 +31,7 @@ sudo apt update -y
 sudo apt upgrade -y
 sudo ubuntu-drivers install
 
-sudo apt install libfuse2 curl build-essential arandr -y
-
 snap-store --quit && sudo snap refresh snap-store
-
-echo "Xft.dpi: 192" | tee .Xresources
 ```  
 
 2. Configure PPAs and install all required packages
@@ -58,6 +54,11 @@ flameshot \
 feh \
 thunar \
 rofi \
+cbatticon \
+libfuse2 \
+curl \
+build-essential \
+arandr \
 i3 -y
 
 sudo apt remove dunst -y
@@ -75,6 +76,7 @@ rm Hack.zip
 
 echo "inode/directory=thunar.desktop
 x-directory/normal=thunar.desktop" | tee ~/.local/share/applications/mimeapps.list
+echo "Xft.dpi: 192" | tee .Xresources
 ```  
 
 
