@@ -14,6 +14,7 @@ local theme = {}
 theme.tasklist_disable_task_name = true
 
 theme.font          = "Hack Nerd Font 8"
+theme.useless_gap   = dpi(3)
 
 theme.bg_normal     = "#333336"
 theme.bg_focus      = "#656462"
@@ -26,7 +27,6 @@ theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
-theme.useless_gap   = dpi(4)
 theme.border_width  = dpi(1)
 theme.border_normal = "#000000"
 theme.border_focus  = "#b86b0c"
