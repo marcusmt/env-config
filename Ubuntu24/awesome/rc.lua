@@ -9,7 +9,6 @@ local menubar = require("menubar")
 menubar.utils.terminal = terminal
 local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
-local debian = require("debian.menu")
 local has_fdo, freedesktop = pcall(require, "freedesktop")
 
 if awesome.startup_errors then
@@ -42,8 +41,8 @@ editor_cmd = terminal .. " -e " .. editor
 modkey = "Mod4"
 
 awful.layout.layouts = {
-    awful.layout.suit.max,
     awful.layout.suit.tile.top,
+    awful.layout.suit.max
 }
 
 local taglist_buttons = gears.table.join(
@@ -166,10 +165,9 @@ globalkeys = gears.table.join(
 
     awful.key({ modkey, "Shift" }, "e", awesome.quit,
         { description = "quit awesome", group = "awesome" }),
-    awful.key({ modkey, }, "space",
+    awful.key({ modkey, }, "w",
         function()
             awful.layout.inc(1)
-            awful.tag.incnmaster(1, nil, true)
         end,
         { description = "select next", group = "layout" }),
 
@@ -198,20 +196,33 @@ globalkeys = gears.table.join(
     awful.key({}, "Print", function () awful.spawn("flameshot gui") end,
         { description = "take screenshots", group = "layout" }
     ),
-    awful.key({}, "XF86AudioRaiseVolume", function () awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ +10%") end,
-        { description = "take screenshots", group = "layout" }
+    awful.key({}, "XF86AudioRaiseVolume",
+        function ()
+            awful.spawn.easy_async_with_shell("pactl get-sink-volume @DEFAULT_SINK@ | grep -Po '[0-9]{1,3}(?=%)' | head -1", function(stdout)
+                if tonumber(stdout) < 100 then
+                    awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ +10%")
+                end
+                
+                naughty.notify({
+                    preset = naughty.config.presets.normal,
+                    title = "Vol Icon",
+                    text = stdout
+                })
+            end)
+        end,
+        { description = "Volume Up", group = "layout" }
     ),
     awful.key({}, "XF86AudioLowerVolume", function ()
         awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ -10%")
         awful.spawn.easy_async_with_shell("pactl get-sink-volume @DEFAULT_SINK@ | grep -Po '[0-9]{1,3}(?=%)' | head -1", function(stdout)
             naughty.notify({
-                preset = naughty.config.presets.critical,
+                preset = naughty.config.presets.normal,
                 title = "Vol Icon",
                 text = stdout
             })
         end)
     end,
-        { description = "take screenshots", group = "layout" }
+        { description = "Volume Down", group = "layout" }
     )
 )
 
@@ -231,7 +242,10 @@ clientkeys = gears.table.join(
         { description = "toggle fullscreen", group = "client" }
     ),
 
-    awful.key({ modkey, "Shift" }, "q", function(c) c:kill() end,
+    awful.key({ modkey, "Shift" }, "q",
+        function(c)
+            c:kill()
+        end,
         { description = "close", group = "client" }),
     awful.key({ modkey, "Shift" }, "space", awful.client.floating.toggle,
         { description = "toggle floating", group = "client" }),
@@ -243,7 +257,13 @@ clientkeys = gears.table.join(
             c.minimized = true
         end,
         { description = "minimize", group = "client" }
-    )
+    ),
+    awful.key({ modkey,           }, "m",
+        function (c)
+            c.maximized = not c.maximized
+            c:raise()
+        end ,
+        {description = "(un)maximize", group = "client"})
 )
 
 for i = 1, 9 do
@@ -346,17 +366,66 @@ awful.rules.rules = {
         },
         properties = { floating = true }
     },
+    -- Add titlebars to normal clients and dialogs
+    { rule_any = {type = { "normal", "dialog" }
+      }, properties = { titlebars_enabled = true }
+    },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { screen = 1, tag = "2" } },
 }
 
-client.connect_signal("manage", function(c)
+-- Add a titlebar if titlebars_enabled is set to true in the rules.
+client.connect_signal("request::titlebars", function(c)
+    -- buttons for the titlebar
+    local buttons = gears.table.join(
+        awful.button({ }, 1, function()
+            c:emit_signal("request::activate", "titlebar", {raise = true})
+            awful.mouse.client.move(c)
+        end),
+        awful.button({ }, 3, function()
+            c:emit_signal("request::activate", "titlebar", {raise = true})
+            awful.mouse.client.resize(c)
+        end)
+    )
+
+    awful.titlebar(c) : setup {
+        { -- Left
+            awful.titlebar.widget.iconwidget(c),
+            buttons = buttons,
+            layout  = wibox.layout.fixed.horizontal
+        },
+        { -- Middle
+            { -- Title
+                align  = "center",
+                widget = awful.titlebar.widget.titlewidget(c)
+            },
+            buttons = buttons,
+            layout  = wibox.layout.flex.horizontal
+        },
+        { -- Right
+            awful.titlebar.widget.floatingbutton (c),
+            awful.titlebar.widget.maximizedbutton(c),
+            awful.titlebar.widget.stickybutton   (c),
+            awful.titlebar.widget.ontopbutton    (c),
+            awful.titlebar.widget.closebutton    (c),
+            layout = wibox.layout.fixed.horizontal()
+        },
+        layout = wibox.layout.align.horizontal
+    }
+end)
+
+-- {{{ Signals
+-- Signal function to execute when a new client appears.
+client.connect_signal("manage", function (c)
+    awful.tag.incnmaster(1, nil, true)
+
     if awesome.startup
-        and not c.size_hints.user_position
-        and not c.size_hints.program_position then
-        awful.placement.no_offscreen(c)
+      and not c.size_hints.user_position
+      and not c.size_hints.program_position then
+        -- Prevent clients from being unreachable after screen count changes.
+        awful.client.setslave(c)
     end
 end)
 
@@ -373,9 +442,9 @@ client.connect_signal("manage", function(c)
     end
 end)
 
-awful.spawn.with_shell("/home/marcus/.screenlayout/dual_home.sh")
+awful.spawn.with_shell("/home/marcus/.screenlayout/dual.sh")
 awful.spawn.with_shell("nm-applet")
 awful.spawn.with_shell("blueman-applet")
-awful.spawn.with_shell("pkill -f pasystray")
-awful.spawn.with_shell("pasystray")
-awful.spawn.with_shell("flameshot")
+awful.spawn.easy_async_with_shell("pkill -f flameshot", function()
+    awful.spawn("flameshot")
+end)

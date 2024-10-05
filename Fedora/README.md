@@ -8,10 +8,7 @@ Fedora setup below is using Nvidia driver which requires a lot of restarts.
 
 ## Environment
 - Fedora 40
-- i3
-    - Rofi
-    - Picom
-    - Dunst
+- AwesomeWM
 - Alacritty
     - Fish Shell
     - Starship
@@ -35,9 +32,16 @@ libva-utils \
 vdpauinfo -y
 sudo akmods --force
 sudo dracut --force
-echo "#This file is provided by xorg-x11-drv-nvidia
-#Do not edit
+```
 
+3. Wait for up to 10 minutes and then execute:
+```shell
+sudo akmods --force
+sudo dracut --force
+```
+
+4. Create the file /etc/X11/xorg.conf.d/nvidia.conf and paste:
+```shell
 Section "OutputClass"
 	Identifier "nvidia"
 	MatchDriver "nvidia-drm"
@@ -51,26 +55,20 @@ EndSection
 Section "ServerLayout"
 	Identifier "layout"
 	Option "AllowNVIDIAGPUScreens"
-EndSection" | tee /etc/X11/xorg.conf.d/nvidia.conf
+EndSection
 ```
 
-4. Install the needed packages then roboot
+5. Install the needed packages then roboot
 ```shell
 sudo dnf install git \
 fish \
 alacritty \
 blueman \
-picom \
-rofi \
 neovim \
-pasystray \
-dunst \
 arandr \
 flameshot \
-feh \
-thunar \
-code \
-i3 -y
+network-manager-applet \
+code -y
 
 curl -sS https://starship.rs/install.sh | sh
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Hack.zip
