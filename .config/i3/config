@@ -10,12 +10,13 @@ exec_always --no-startup-id feh --bg-scale $HOME/Pictures/wall.jpg
 
 gaps inner 6
 focus_wrapping workspace
-focus_follows_mouse no
-no_focus [all]
 
 default_border pixel 1
 for_window [class=.*] border pixel 1
 default_floating_border pixel 1
+
+gaps inner 6
+focus_wrapping workspace
 
 bindsym $mod+Shift+Down exec --no-startup-id $HOME/.config/i3/single.sh
 bindsym $mod+Shift+Up exec --no-startup-id $HOME/.config/i3/dual.sh

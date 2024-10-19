@@ -4,7 +4,6 @@ Everything is based on my taste and preferences so follow it on your own risk!
 
 ## Environment
 - i3WM
-    - Rofi
     - Picom
     - Dunst
 - Alacritty

@@ -9,7 +9,6 @@ Everything is based on my taste and preferences so follow it on your own risk!
 ## Environment
 - Ubuntu 22.04 (I prefer Fedora but I have to use Ubuntu because of my work environment...)
 - i3WM
-    - Rofi
     - Picom
     - Dunst
 - Alacritty
@@ -49,16 +48,13 @@ sudo apt install fzf \
 blueman \
 fish \
 git \
-pasystray \
 flameshot \
 feh \
-thunar \
-rofi \
-cbatticon \
 libfuse2 \
 curl \
 build-essential \
 arandr \
+lxappearance \
 i3 -y
 
 sudo apt remove dunst -y
@@ -74,8 +70,6 @@ unzip Hack.zip -d ~/.fonts
 fc-cache -fv
 rm Hack.zip
 
-echo "inode/directory=thunar.desktop
-x-directory/normal=thunar.desktop" | tee ~/.local/share/applications/mimeapps.list
 echo "Xft.dpi: 192" | tee .Xresources
 ```  
 
@@ -87,11 +81,6 @@ echo "Xft.dpi: 192" | tee .Xresources
 5. [Build Alacritty](https://github.com/alacritty/alacritty/blob/master/INSTALL.md)
 
 6. Eye candy stuff:
-    - https://github.com/catppuccin
-    - Walpapper https://4kwallpapers.com/fantasy/lofi-night-city-14857.html
+    - https://draculatheme.com/
+    - Walpapper https://4kwallpapers.com/black-dark/dark-abstract-18134.html
 
-7. Coding IA
-    - Download https://ollama.com/download
-    - Install the model from https://qwen.readthedocs.io/en/latest/run_locally/ollama.html
-    - Install the Extension for Jetbrains (available for VSCode as well): https://plugins.jetbrains.com/plugin/22707-continue
-        - Guide for configuration https://docs.continue.dev/intro
