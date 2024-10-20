@@ -5,6 +5,8 @@ exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id nm-applet
 exec --no-startup-id blueman-applet
 exec --no-startup-id flameshot
+exec --no-startup-id $HOME/.config/i3/laptop.sh
+exec --no-startup-id /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
 exec_always --no-startup-id picom -b --config $HOME/.config/picom/picom.conf
 exec_always --no-startup-id feh --bg-scale $HOME/Pictures/wall.jpg
 
@@ -19,7 +21,7 @@ gaps inner 6
 focus_wrapping workspace
 
 bindsym $mod+Shift+Down exec --no-startup-id $HOME/.config/i3/single.sh
-bindsym $mod+Shift+Up exec --no-startup-id $HOME/.config/i3/dual.sh
+bindsym $mod+Shift+Up exec --no-startup-id $HOME/.config/i3/laptop.sh
 
 # Move the current workspace to the next output
 # (effectively toggles when you only have two outputs)
@@ -103,13 +105,21 @@ mode "resize" {
         bindsym $mod+Shift+t mode "default"
 }
 
-# class                 border  bground text    indicator child_border
-client.focused          #6272A4 #6272A4 #F8F8F2 #6272A4   #6272A4
-client.focused_inactive #44475A #44475A #F8F8F2 #44475A   #44475A
-client.unfocused        #282A36 #282A36 #BFBFBF #282A36   #282A36
-client.urgent           #44475A #FF5555 #F8F8F2 #FF5555   #FF5555
-client.placeholder      #282A36 #282A36 #F8F8F2 #282A36   #282A36
-client.background       #F8F8F2
+set $rosewater #f2d5cf
+set $red #e78284
+set $peach #ef9f76
+set $text #c6d0f5
+set $overlay0 #737994
+set $base #303446
+set $crust #232634
+
+# target                 title     bg     text   indicator  border
+client.focused           $crust    $base  $text  $peach     $peach
+client.focused_inactive  $crust    $base  $text  $rosewater $overlay0
+client.unfocused         $crust    $crust $text  $rosewater $overlay0
+client.urgent            $red      $base  $red   $overlay0  $red
+client.placeholder       $crust    $base  $text  $overlay0  $overlay0
+client.background        $base
 
 bar {
     font pango:Hack Nerd Font 8
@@ -120,6 +130,6 @@ bar {
     position top
     colors {
         background #00000000
-        statusline #FFFFFF
+        statusline $text
     }
 }
