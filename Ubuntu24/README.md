@@ -8,7 +8,6 @@ Everything is based on my taste and preferences so follow it on your own risk!
 ## Environment
 - Ubuntu 24.04 (I prefer Fedora but I have to use Ubuntu because of my work environment...)
 - i3
-    - Rofi
     - Picom
     - Dunst
 - Alacritty
@@ -22,6 +21,12 @@ Everything is based on my taste and preferences so follow it on your own risk!
     - Check if Nvidia is updated
     - Reboot
 ```shell
+sudo add-apt-repository ppa:git-core/ppa -y
+sudo apt-add-repository ppa:fish-shell/release-3 -y
+sudo add-apt-repository universe -y
+curl https://baltocdn.com/i3-window-manager/signing.asc | sudo apt-key add -
+sudo apt install apt-transport-https --yes
+echo "deb https://baltocdn.com/i3-window-manager/i3/i3-autobuild-ubuntu/ all main" | sudo tee /etc/apt/sources.list.d/i3-autobuild.list
 sudo apt update -y
 sudo apt upgrade -y
 sudo ubuntu-drivers install
@@ -31,33 +36,39 @@ snap-store --quit && sudo snap refresh snap-store
 ## What to do after installing Ubuntu
 2. Install required packages
 ```shell
-sudo add-apt-repository ppa:git-core/ppa -y
-sudo apt-add-repository ppa:fish-shell/release-3 -y
-sudo add-apt-repository universe -y
 sudo apt install fish \
 git \
 arandr \
 blueman \
-pavucontrol \
-pasystray \
 brightnessctl \
 libfuse2 \
 flameshot \
-thunar \
-awesome -y
+feh \
+lxappearance \
+build-essential \
+cmake \
+i3 -y
+
 curl -sS https://starship.rs/install.sh | sh
 sudo snap install nvim --classic
-sudo snap install alacritty --classic
-sudo snap install pinta
+
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Hack.zip
 mkdir ~/.fonts
 unzip Hack.zip -d ~/.fonts
 fc-cache -fv
 rm Hack.zip
+
 echo "Xft.dpi: 192" | tee .Xresources
 sudo apt autoremove -y
+
 sudo usermod -aG video ${USER}
 ```  
+
+3. [Build Picom to get the latest version](https://github.com/yshui/picom/tree/stable/11)
+
+4. [Build Dunst to get the latest version](https://github.com/dunst-project/dunst)
+
+5. [Build Alacritty](https://github.com/alacritty/alacritty/blob/master/INSTALL.md)
 
 6. Eye candy stuff:
     - https://github.com/catppuccin

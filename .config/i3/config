@@ -105,20 +105,20 @@ mode "resize" {
         bindsym $mod+Shift+t mode "default"
 }
 
-set $rosewater #f2d5cf
-set $red #e78284
-set $peach #ef9f76
-set $text #c6d0f5
-set $overlay0 #737994
-set $base #303446
-set $crust #232634
+set $rosewater #f5e0dc
+set $red #f38ba8
+set $peach #fab387
+set $lavender #b4befe
+set $text #cdd6f4
+set $overlay0 #6c7086
+set $base #1e1e2e
 
-# target                 title     bg     text   indicator  border
-client.focused           $crust    $base  $text  $peach     $peach
-client.focused_inactive  $crust    $base  $text  $rosewater $overlay0
-client.unfocused         $crust    $crust $text  $rosewater $overlay0
-client.urgent            $red      $base  $red   $overlay0  $red
-client.placeholder       $crust    $base  $text  $overlay0  $overlay0
+# target                 title     bg    text   indicator  border
+client.focused           $lavender $base $text  $rosewater $lavender
+client.focused_inactive  $overlay0 $base $text  $rosewater $overlay0
+client.unfocused         $overlay0 $base $text  $rosewater $overlay0
+client.urgent            $peach    $base $peach $overlay0  $peach
+client.placeholder       $overlay0 $base $text  $overlay0  $overlay0
 client.background        $base
 
 bar {
