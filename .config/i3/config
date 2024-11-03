@@ -1,4 +1,4 @@
-font pango:Hack Nerd Font 8
+font pango:Hack Nerd Font 0
 set $mod Mod4
 
 exec --no-startup-id dex --autostart --environment i3
@@ -12,6 +12,7 @@ exec_always --no-startup-id feh --bg-scale $HOME/Pictures/wall.jpg
 
 gaps inner 6
 focus_wrapping workspace
+popup_during_fullscreen leave_fullscreen
 
 default_border pixel 1
 for_window [class=.*] border pixel 1
@@ -20,8 +21,8 @@ default_floating_border pixel 1
 gaps inner 6
 focus_wrapping workspace
 
-bindsym $mod+Shift+Down exec --no-startup-id $HOME/.config/i3/single.sh
-bindsym $mod+Shift+Up exec --no-startup-id $HOME/.config/i3/laptop.sh
+bindsym $mod+Control+Down exec --no-startup-id $HOME/.config/i3/single.sh
+bindsym $mod+Control+Up exec --no-startup-id $HOME/.config/i3/laptop.sh
 
 # Move the current workspace to the next output
 # (effectively toggles when you only have two outputs)
@@ -67,6 +68,9 @@ bindsym XF86MonBrightnessDown exec --no-startup-id $HOME/.config/i3/media_contro
 bindsym $mod+Left focus left
 bindsym $mod+Right focus right
 
+bindsym $mod+Up fullscreen toggle, focus left, fullscreen toggle
+bindsym $mod+Down fullscreen toggle, focus right, fullscreen toggle
+
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Right move right
 
@@ -105,21 +109,13 @@ mode "resize" {
         bindsym $mod+Shift+t mode "default"
 }
 
-set $rosewater #f5e0dc
-set $red #f38ba8
-set $peach #fab387
-set $lavender #b4befe
-set $text #cdd6f4
-set $overlay0 #6c7086
-set $base #1e1e2e
-
-# target                 title     bg    text   indicator  border
-client.focused           $lavender $base $text  $rosewater $lavender
-client.focused_inactive  $overlay0 $base $text  $rosewater $overlay0
-client.unfocused         $overlay0 $base $text  $rosewater $overlay0
-client.urgent            $peach    $base $peach $overlay0  $peach
-client.placeholder       $overlay0 $base $text  $overlay0  $overlay0
-client.background        $base
+# target                 title   bg      text    indicator border
+client.focused           #000000 #000000 #000000 #000000   #000000
+client.focused_inactive  #000000 #000000 #000000 #000000   #000000
+client.unfocused         #000000 #000000 #000000 #000000   #000000
+client.urgent            #000000 #000000 #000000 #000000   #000000
+client.placeholder       #000000 #000000 #000000 #000000   #000000
+client.background        #000000
 
 bar {
     font pango:Hack Nerd Font 8
@@ -130,6 +126,6 @@ bar {
     position top
     colors {
         background #00000000
-        statusline $text
+        statusline #000000
     }
 }
