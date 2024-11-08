@@ -21,12 +21,7 @@ Everything is based on my taste and preferences so follow it on your own risk!
     - Check if Nvidia is updated
     - Reboot
 ```shell
-sudo add-apt-repository ppa:git-core/ppa -y
-sudo apt-add-repository ppa:fish-shell/release-3 -y
 sudo add-apt-repository universe -y
-curl https://baltocdn.com/i3-window-manager/signing.asc | sudo apt-key add -
-sudo apt install apt-transport-https --yes
-echo "deb https://baltocdn.com/i3-window-manager/i3/i3-autobuild-ubuntu/ all main" | sudo tee /etc/apt/sources.list.d/i3-autobuild.list
 sudo apt update -y
 sudo apt upgrade -y
 sudo ubuntu-drivers install
@@ -36,6 +31,14 @@ snap-store --quit && sudo snap refresh snap-store
 ## What to do after installing Ubuntu
 2. Install required packages
 ```shell
+sudo add-apt-repository ppa:git-core/ppa -y
+sudo apt-add-repository ppa:fish-shell/release-3 -y
+curl https://baltocdn.com/i3-window-manager/signing.asc | sudo apt-key add -
+sudo apt install apt-transport-https --yes
+echo "deb https://baltocdn.com/i3-window-manager/i3/i3-autobuild-ubuntu/ all main" | sudo tee /etc/apt/sources.list.d/i3-autobuild.list
+
+sudo apt update -y
+
 sudo apt install fish \
 git \
 arandr \
