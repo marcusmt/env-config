@@ -75,7 +75,7 @@ sudo usermod -aG video ${USER}
 
 6. Eye candy stuff:
     - https://github.com/catppuccin
-    - Walpapper https://www.pexels.com/photo/rock-formation-close-up-photography-2646237/
+    - Walpapper https://gruvbox-wallpapers.pages.dev/wallpapers/irl/kace-rodriguez-p3OzJuT_Dks.jpg
 
 7. Coding AI
     - Download https://ollama.com/download
