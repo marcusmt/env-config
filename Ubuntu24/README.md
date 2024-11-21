@@ -50,6 +50,7 @@ feh \
 lxappearance \
 build-essential \
 cmake \
+policykit-1-gnome \
 i3 -y
 
 curl -sS https://starship.rs/install.sh | sh

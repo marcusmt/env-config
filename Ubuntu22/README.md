@@ -55,6 +55,7 @@ curl \
 build-essential \
 arandr \
 lxappearance \
+policykit-1-gnome \
 i3 -y
 
 sudo apt remove dunst -y
