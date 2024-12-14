@@ -44,32 +44,17 @@ mkdir ~/.fonts
 unzip Hack.zip -d ~/.fonts
 fc-cache -fv
 rm Hack.zip
-```  
-
-## What to do after installing Ubuntu
-2. Install required packages
-```shell
-sudo apt update -y
-
-brightnessctl \
-libfuse2 \
-flameshot \
-feh \
-lxappearance \
-build-essential \
-cmake \
-policykit-1-gnome -y
 
 curl -sS https://starship.rs/install.sh | sh
-
 ```  
-5. [Build Alacritty](https://github.com/alacritty/alacritty/blob/master/INSTALL.md)
 
-6. Eye candy stuff:
-    - https://github.com/catppuccin
+2. Eye candy stuff:
+    - GTK theme: https://www.pling.com/p/1681313/
+    - Mouse Cursor theme: https://www.pling.com/p/1358330
+    - Icons: https://www.pling.com/p/1209330
     - Walpapper https://gruvbox-wallpapers.pages.dev/wallpapers/irl/kace-rodriguez-p3OzJuT_Dks.jpg
 
-7. Coding AI
+3. Coding AI
     - Download https://ollama.com/download
     - Install the model from https://qwen.readthedocs.io/en/latest/run_locally/ollama.html
     - Install the Extension for Jetbrains (available for VSCode as well): https://plugins.jetbrains.com/plugin/22707-continue

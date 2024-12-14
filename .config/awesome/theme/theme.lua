@@ -37,6 +37,6 @@ theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
 
 theme.wallpaper = "/home/marcus/.config/awesome/wall7.jpg"
 
-theme.icon_theme = "/home/marcus/.icons/Papirus/"
+theme.icon_theme = "/home/marcus/.icons/Zafiro-Icons-Dark/"
 
 return theme
