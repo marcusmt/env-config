@@ -1,11 +1,6 @@
-# My Personal Ubuntu Environment Setup with i3WM
-1. Environment
-2. What to do after installing Ubuntu
-3. AwesomeWM customisation
+# My Personal Ubuntu Environment Setup with AwesomeWM
 
-Everything is based on my taste and preferences so follow it on your own risk!  
-
-## Environment
+## OS
 - Ubuntu 24.04
 
 ## What to do after installing Ubuntu
@@ -31,10 +26,11 @@ arandr \
 lxappearance \
 libfuse2 -y
 
+sudo snap install nvim --classic
+
 sudo apt autoremove -y
 
 snap-store --quit && sudo snap refresh snap-store
-sudo snap install nvim --classic
 
 echo "Xft.dpi: 192" | tee .Xresources
 sudo usermod -aG video ${USER}
@@ -46,7 +42,7 @@ fc-cache -fv
 rm Hack.zip
 
 curl -sS https://starship.rs/install.sh | sh
-```  
+```
 
 2. Eye candy stuff:
     - GTK theme: https://www.pling.com/p/1681313/
