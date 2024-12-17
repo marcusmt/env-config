@@ -103,6 +103,6 @@ mkdir ~/.icons
 mkdir ~/.themes
 tar -xvf 01-Vimix-cursors.tar.xz -C ~/.icons
 tar -xvf Zafiro-Icons-Dark-Black-f.tar.xz -C ~/.icons/
-unzip Gruvbox-Dark-Soft-BL-LB -d ~/.themes/
-cp -r Gruvbox-Dark-Soft-BL-LB/Gruvbox-Dark-Soft/gtk-4.0/ ~/.config/
+unzip ~/Downloads/Gruvbox-Dark-Soft-BL-LB.zip -d ~/.themes/
+cp -r ~/.themes/Gruvbox-Dark-Soft/gtk-4.0/ ~/.config/
 ```
