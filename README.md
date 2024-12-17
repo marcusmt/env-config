@@ -101,8 +101,8 @@ cp env-config-main/.config/.wezterm.lua ~/
 ```shell
 mkdir ~/.icons
 mkdir ~/.themes
-tar -xvf 01-Vimix-cursors.tar.xz -C ~/.icons
-tar -xvf Zafiro-Icons-Dark-Black-f.tar.xz -C ~/.icons/
+tar -xvf ~/Downloads/01-Vimix-cursors.tar.xz -C ~/.icons
+tar -xvf ~/Downloads/Zafiro-Icons-Dark-Black-f.tar.xz -C ~/.icons/
 unzip ~/Downloads/Gruvbox-Dark-Soft-BL-LB.zip -d ~/.themes/
 cp -r ~/.themes/Gruvbox-Dark-Soft/gtk-4.0/ ~/.config/
 ```
