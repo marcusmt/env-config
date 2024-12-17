@@ -18,7 +18,9 @@ floating_minimum_size 1024 x 768
 floating_maximum_size 2048 x 1280
 
 bindsym $mod+Control+Down exec --no-startup-id $HOME/.config/i3/single.sh
-bindsym $mod+Control+Up exec --no-startup-id $HOME/.config/i3/laptop.sh
+bindsym $mod+Control+Up exec --no-startup-id $HOME/.config/i3/dual.sh
+
+bindsym $mod+t exec gdmflexiserver
 
 # Move the current workspace to the next output
 # (effectively toggles when you only have two outputs)
