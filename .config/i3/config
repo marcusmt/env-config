@@ -1,38 +1,50 @@
-font pango:Hack Nerd Font 0
-set $mod Mod4
-
+#           Start Apps
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id nm-applet
 exec --no-startup-id /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
 exec --no-startup-id picom -b --config $HOME/.config/picom/picom.conf
+exec --no-startup-id cbatticon
 exec_always --no-startup-id feh --bg-fil $HOME/Pictures/wall.jpg
 
-gaps inner 6
+#           Behavior
+font pango:Hack Nerd Font 0
+gaps inner 12
 focus_wrapping workspace
-default_border pixel 2
+popup_during_fullscreen all
+smart_gaps on
+
+default_border pixel 1
 for_window [class=.*] border pixel 1
 default_floating_border pixel 1
-popup_during_fullscreen all
 
 floating_minimum_size 1024 x 768
 floating_maximum_size 2048 x 1280
 
+#           Keybinds
+set $mod Mod4
+
+bindsym $mod+t exec gdmflexiserver
+
+bindsym $mod+r exec --no-startup-id dmenu_run
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym Print exec "flameshot gui"
+
+bindsym $mod+z exec dunstctl set-paused true
+bindsym $mod+Shift+z exec dunstctl set-paused false
+
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Exit?' -B 'Yes, exit i3' 'i3-msg exit'"
+
 bindsym $mod+Control+Down exec --no-startup-id $HOME/.config/i3/single.sh
 bindsym $mod+Control+Up exec --no-startup-id $HOME/.config/i3/dual.sh
 
-bindsym $mod+t exec gdmflexiserver
+bindsym $mod+Return exec wezterm
+bindsym $mod+Shift+q kill
+bindsym $mod+Shift+r restart
+floating_modifier $mod
 
 # Move the current workspace to the next output
 # (effectively toggles when you only have two outputs)
 bindsym $mod+x move workspace to output next
-
-bindsym $mod+r exec --no-startup-id dmenu_run
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
-
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Exit?' -B 'Yes, exit i3' 'i3-msg exit'"
-
-bindsym $mod+z exec dunstctl set-paused true
-bindsym $mod+Shift+z exec dunstctl set-paused false
 
 # Make the currently focused window a scratchpad
 bindsym $mod+h move scratchpad
@@ -48,18 +60,11 @@ bindsym $mod+w layout toggle tabbed split
 # toggle tiling / floating
 bindsym $mod+space floating toggle
 
-bindsym $mod+Return exec wezterm
-bindsym $mod+Shift+q kill
-bindsym $mod+Shift+r restart
-floating_modifier $mod
-
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $HOME/.config/i3/media_control.sh volume
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $HOME/.config/i3/media_control.sh volume
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $HOME/.config/i3/media_control.sh volume
 bindsym XF86MonBrightnessUp   exec --no-startup-id $HOME/.config/i3/media_control.sh brightness_up
 bindsym XF86MonBrightnessDown exec --no-startup-id $HOME/.config/i3/media_control.sh brightness_down
-
-bindsym Print exec "flameshot gui"
 
 bindsym $mod+Left focus left
 bindsym $mod+Right focus right
@@ -103,11 +108,11 @@ mode "resize" {
         bindsym $mod+Shift+t mode "default"
 }
 
-set $active #a89984
-set $text_active #1d2021
-set $active_title #d5c4a1
+set $active #ffffff
+set $text_active #ffffff
+set $active_title #ffffff
 
-set $inactive #504945
+set $inactive #000000
 set $text_inactive #bdae93
 
 set $urgent #cc241d

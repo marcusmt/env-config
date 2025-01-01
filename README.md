@@ -41,6 +41,8 @@ policykit-1-gnome \
 wezterm \
 pasystray \
 pavucontrol \
+cbatticon \
+blueman \
 i3 -y
 
 sudo apt remove dunst i3lock
@@ -82,7 +84,7 @@ make
 sudo make install
 
 # Wallpaper
-curl -L https://gruvbox-wallpapers.pages.dev/wallpapers/irl/kace-rodriguez-p3OzJuT_Dks.jpg -o ~/Pictures/wall.jpg
+curl -L https://github.com/orangci/walls-catppuccin-mocha/blob/master/voxel-city.jpg -o ~/Pictures/wall.jpg
 
 # Dots Files
 cd ~/Downloads
@@ -91,7 +93,10 @@ unzip main.zip
 cp -r env-config-main/.config/i3 ~/.config/
 cp -r env-config-main/.config/picom/ ~/.config/
 cp -r env-config-main/.config/dunst/ ~/.config/
+cp -r env-config-main/.config/zed/ ~/.config/
 cp env-config-main/.config/.wezterm.lua ~/
+cp env-config-main/.config/gtk/settings.ini ~/.config/gtk-3.0
+cp env-config-main/.config/gtk/settings.ini ~/.config/gtk-4.0
 ```
 
 6. Eye candy stuff:
