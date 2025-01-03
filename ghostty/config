@@ -1,0 +1,22 @@
+font-family = "Hack Nerd Font"
+theme = "ayu"
+cursor-color = "white"
+cursor-style = "underline"
+shell-integration-features = "no-cursor"
+scrollback-limit = 9999999
+window-decoration = false
+
+keybind = ctrl+q=clear_screen
+keybind = ctrl+.=scroll_page_up
+keybind = ctrl+;=scroll_page_down
+
+keybind = ctrl+l=new_split:right
+keybind = ctrl+k=new_split:down
+
+keybind = ctrl+shift+i=goto_split:top
+keybind = ctrl+shift+j=goto_split:left
+keybind = ctrl+shift+k=goto_split:bottom
+keybind = ctrl+shift+l=goto_split:right
+
+keybind = ctrl+p=close_surface
+keybind = ctrl+h=equalize_splits
