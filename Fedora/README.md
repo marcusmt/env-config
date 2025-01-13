@@ -1,46 +1,15 @@
-# My Personal Fedora Environment Setup with i3WM
-1. Environment
-2. What to do after installing Fedora i3 Spin
-3. AwesomeWM customisation
-
-Everything is based on my taste and preferences so follow it on your own risk!
-Fedora setup below is using Nvidia driver which requires a lot of restarts.
-
-## Environment
-- Fedora 40
-- AwesomeWM
-- Alacritty
-    - Fish Shell
-    - Starship
-    - NeoVim
-
-## What to do after installing FEdora
+## What to do after installing Fedora
 1. Update to the latest packages and then reboot
 ```shell
 sudo dnf upgrade -y
-```  
-
-2. Install Nvidia drivers. Then reboot. After the restart, configure nvidia in the nvidia-settings software and reboot again.
-```shell
-sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-sudo dnf upgrade -y
-sudo dnf install akmod-nvidia \
-xorg-x11-drv-nvidia-cuda \
-nvidia-vaapi-driver \
-libva-utils \
-vdpauinfo -y
-sudo akmods --force
-sudo dracut --force
+reboot
 ```
 
-3. Wait for up to 10 minutes and then execute:
-```shell
-sudo akmods --force
-sudo dracut --force
-```
-
-4. Create the file /etc/X11/xorg.conf.d/nvidia.conf and paste:
+2. Install Nvidia drivers.
+It's better to do it manually checking if the guides were updated and if the new driver version is adding a new property
+https://wiki.archlinux.org/title/NVIDIA/Troubleshooting#Avoid_screen_tearing
+https://rpmfusion.org/Howto/NVIDIA
+Include the ForceFullCompositionPipeline=On and the properties
 ```shell
 Section "OutputClass"
 	Identifier "nvidia"
@@ -58,68 +27,51 @@ Section "ServerLayout"
 EndSection
 ```
 
+3. Install Zed
+```shell
+cd ~
+curl -f https://zed.dev/install.sh | sh
+```
+
+4. Install Ghostty
+```shell
+sudo dnf copr enable pgdev/ghostty
+sudo dnf install ghostty
+```
+
 5. Install the needed packages then roboot
 ```shell
 sudo dnf install git \
-fish \
-alacritty \
-blueman \
-neovim \
 arandr \
-flameshot \
-network-manager-applet \
-code -y
+xorg-x11-server-Xorg \
+picom \
+feh \
+dunst \
+i3 -y
 
-curl -sS https://starship.rs/install.sh | sh
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Hack.zip
+sudo dnf remove i3lock xss-lock
+
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/Hack.zip
 mkdir ~/.fonts
 unzip Hack.zip -d ~/.fonts
 fc-cache -fv
 rm Hack.zip
-echo "Xft.dpi: 192
 
-*background: #1e1e2e
-*foreground: #cdd6f4
-*cursorColor: #f5e0dc
+echo "Xft.dpi: 192" | tee .Xresources
+```
 
-! black
-*color0: #45475a
-*color8: #585b70
+6. Copy configuration files
+```shell
+cd ~/Downloads
+wget https://github.com/marcusmt/env-config/archive/refs/heads/main.zip
+unzip main.zip
+cp -r env-config-main/zed/ ~/.config/
+cp -r env-config-main/ghostty/ ~/.config/
+cp -r env-config-main/i3/ ~/.config/
+cp -r env-config-main/dunst/ ~/.config/
+```
 
-! red
-*color1: #f38ba8
-*color9: #f38ba8
-
-! green
-*color2: #a6e3a1
-*color10: #a6e3a1
-
-! yellow
-*color3: #f9e2af
-*color11: #f9e2af
-
-! blue
-*color4: #89b4fa
-*color12: #89b4fa
-
-! magenta
-*color5: #f5c2e7
-*color13: #f5c2e7
-
-! cyan
-*color6: #94e2d5
-*color14: #94e2d5
-
-! white
-*color7: #bac2de
-*color15: #a6adc8" | tee .Xresources
-```  
-
-5. Eye candy stuff:
-    - Catppucchin themes https://github.com/catppuccin
-    - Walpapper https://www.pexels.com/photo/rock-formation-close-up-photography-2646237/
-
-6. Coding AI
+7. Coding AI
     - Download https://ollama.com/download
     - Install the model from https://qwen.readthedocs.io/en/latest/run_locally/ollama.html
     - Install the Extension for Jetbrains (available for VSCode as well): https://plugins.jetbrains.com/plugin/22707-continue

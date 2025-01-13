@@ -84,7 +84,7 @@ make
 sudo make install
 
 # Wallpaper
-curl -L https://github.com/orangci/walls-catppuccin-mocha/blob/master/voxel-city.jpg -o ~/Pictures/wall.jpg
+curl -L https://gruvbox-wallpapers.pages.dev/wallpapers/irl/jr-korpa-YXQew2KZjzY.jpg -o ~/Pictures/wall.jpg
 
 # Dots Files
 cd ~/Downloads

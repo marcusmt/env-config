@@ -25,8 +25,8 @@ set $mod Mod4
 
 bindsym $mod+t exec gdmflexiserver
 
-bindsym $mod+r exec --no-startup-id dmenu_run
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+r exec --no-startup-id "dmenu_run -nf '#1d2021' -nb '#a89984' -sb '#504945' -sf '#F8F8F2' -fn 'Hack Nerd Font-10' -p 'Search:'"
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu_run -nf '#1d2021' -nb '#a89984' -sb '#504945' -sf '#F8F8F2' -fn 'Hack Nerd Font-10' -p 'Search:'"
 bindsym Print exec "flameshot gui"
 
 bindsym $mod+z exec dunstctl set-paused true
@@ -37,7 +37,7 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Exit?' -B 'Yes, exit i3' 'i3
 bindsym $mod+Control+Down exec --no-startup-id $HOME/.config/i3/single.sh
 bindsym $mod+Control+Up exec --no-startup-id $HOME/.config/i3/dual.sh
 
-bindsym $mod+Return exec wezterm
+bindsym $mod+Return exec ghostty
 bindsym $mod+Shift+q kill
 bindsym $mod+Shift+r restart
 floating_modifier $mod
@@ -108,11 +108,11 @@ mode "resize" {
         bindsym $mod+Shift+t mode "default"
 }
 
-set $active #ffffff
-set $text_active #ffffff
-set $active_title #ffffff
+set $active #a89984
+set $text_active #1d2021
+set $active_title #d5c4a1
 
-set $inactive #000000
+set $inactive #504945
 set $text_inactive #bdae93
 
 set $urgent #cc241d
