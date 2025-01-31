@@ -1,21 +1,10 @@
 ## Dots for Ubuntu 24
 
-## What to do after installing Ubuntu
-1. Ubuntu first steps.
-    - Update and upgrade to get latest packages
-    - Check if Nvidia is updated
-    - Reboot
+1. Install packages
 ```shell
 sudo add-apt-repository universe -y
-sudo apt update -y
-sudo apt upgrade -y
-sudo ubuntu-drivers install
-snap-store --quit && sudo snap refresh snap-store
-```
 
-2. Install required packages
-```shell
-# needed ppas for latest packages
+# Git
 sudo add-apt-repository ppa:git-core/ppa -y
 
 # i3wm
@@ -23,32 +12,50 @@ sudo add-apt-repository ppa:git-core/ppa -y
 sudo apt install ./keyring.deb
 echo "deb http://debian.sur5r.net/i3/ $(grep '^DISTRIB_CODENAME=' /etc/lsb-release | cut -f2 -d=) universe" | sudo tee /etc/apt/sources.list.d/sur5r-i3.list
 
-# wezterm
+# Wezterm
 curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /etc/apt/keyrings/wezterm-fury.gpg
 echo 'deb [signed-by=/etc/apt/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list
 
+# Firefox
+wget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | sudo tee /etc/apt/keyrings/packages.mozilla.org.asc > /dev/null
+echo "deb [signed-by=/etc/apt/keyrings/packages.mozilla.org.asc] https://packages.mozilla.org/apt mozilla main" | sudo tee -a /etc/apt/sources.list.d/mozilla.list > /dev/null
+echo '
+Package: *
+Pin: origin packages.mozilla.org
+Pin-Priority: 1000
+' | sudo tee /etc/apt/preferences.d/mozilla
+
 sudo apt update -y
+sudo apt upgrade -y
+sudo ubuntu-drivers install
+sudo snap remove firefox
+snap-store --quit && sudo snap refresh snap-store
+sudo snap install nvim --classic
 
 sudo apt install git \
 arandr \
 libfuse2 \
-flameshot \
 feh \
 lxappearance \
 build-essential \
 cmake \
-policykit-1-gnome \
 wezterm \
-pasystray \
+firefox \
 pavucontrol \
+pasystray \
+blueman \
 i3 -y
 
-sudo apt remove dunst i3lock
+sudo apt remove dunst i3lock xss-lock -y
+
+sudo apt autoremove -y
 
 curl -sS https://starship.rs/install.sh | sh
-sudo snap install nvim --classic
+curl -f https://zed.dev/install.sh | sh
+echo 'export PATH=$HOME/.local/bin:$PATH' >> ~/.bashrc
+source ~/.bashrc
 
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Hack.zip
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/Hack.zip
 mkdir ~/.fonts
 unzip Hack.zip -d ~/.fonts
 fc-cache -fv
@@ -56,11 +63,8 @@ rm Hack.zip
 
 echo "Xft.dpi: 192
 Xcursor.theme: Vimix-cursors" | tee .Xresources
-sudo apt autoremove -y
 
 sudo usermod -aG video ${USER}
-
-# Compile applications and install them
 
 # ----- Picom
 cd ~/Downloads
@@ -90,19 +94,23 @@ wget https://github.com/marcusmt/env-config/archive/refs/heads/main.zip
 unzip main.zip
 cp -r env-config-main/.config/i3 ~/.config/
 cp -r env-config-main/.config/picom/ ~/.config/
-cp -r env-config-main/.config/dunst/ ~/.config/
-cp env-config-main/.config/.wezterm.lua ~/
+cp -r env-config-main/dunst/ ~/.config/
+cp -r env-config-main/zed/ ~/.config/
+cp env-config-main/.wezterm.lua ~/
+cp -r env-config-main/gtk-3.0 ~/.config
+cp -r env-config-main/gtk-4.0 ~/.config
 ```
 
-6. Eye candy stuff:
+2. Eye candy stuff:
     - GTK theme: https://www.pling.com/p/1681313/
     - Mouse Cursor theme: https://www.pling.com/p/1358330
-    - Icons: https://www.pling.com/p/1209330
+    - Icons: https://www.gnome-look.org/p/1166289
 ```shell
 mkdir ~/.icons
 mkdir ~/.themes
 tar -xvf ~/Downloads/01-Vimix-cursors.tar.xz -C ~/.icons
-tar -xvf ~/Downloads/Zafiro-Icons-Dark-Black-f.tar.xz -C ~/.icons/
-unzip ~/Downloads/Gruvbox-Dark-Soft-BL-LB.zip -d ~/.themes/
-cp -r ~/.themes/Gruvbox-Dark-Soft/gtk-4.0/ ~/.config/
+tar -xvf ~/Downloads/papirus-icon-theme-20240501.tar.gz -C ~/.icons/
+rm -rf ~/.icons/eP* ~/.icons/Papirus ~/.icons/Papirus-Light
+unzip ~/Downloads/Gruvbox-Dark-BL-LB.zip -d ~/.themes/
+cp -r ~/.themes/Gruvbox-Dark/gtk-4.0/ ~/.config/
 ```

@@ -9,54 +9,54 @@ local config = wezterm.config_builder()
 
 config.keys = {
     {
-        key = '.',
-        mods = 'ALT',
+        key = 'w',
+        mods = 'CTRL',
         action = wezterm.action.CloseCurrentPane { confirm = false },
     },
     {
-        key = 'l',
-        mods = 'ALT',
+        key = 'RightArrow',
+        mods = 'CTRL',
         action = wezterm.action.SplitPane {
             direction = 'Left',
             size = { Percent = 50 },
         },
     },
     {
-        key = 'k',
-        mods = 'ALT',
+        key = 'DownArrow',
+        mods = 'CTRL',
         action = wezterm.action.SplitPane {
             direction = 'Down',
             size = { Percent = 50 },
         },
     },
     {
-        key = 'j',
-        mods = 'CTRL|SHIFT',
+        key = 'LeftArrow',
+        mods = 'ALT',
         action = act.ActivatePaneDirection 'Left',
     },
     {
-        key = 'l',
-        mods = 'CTRL|SHIFT',
+        key = 'RightArrow',
+        mods = 'ALT',
         action = act.ActivatePaneDirection 'Right',
     },
     {
-        key = 'i',
-        mods = 'CTRL|SHIFT',
+        key = 'UpArrow',
+        mods = 'ALT',
         action = act.ActivatePaneDirection 'Up',
     },
     {
-        key = 'k',
-        mods = 'CTRL|SHIFT',
+        key = 'DownArrow',
+        mods = 'ALT',
         action = act.ActivatePaneDirection 'Down',
     },
     {
-        key = 'o',
-        mods = 'ALT',
+        key = 't',
+        mods = 'CTRL',
         action = act.SpawnTab 'DefaultDomain'
     },
     {
-        key = 'p',
-        mods = 'ALT',
+        key = 'w',
+        mods = 'CTRL|SHIFT',
         action = wezterm.action.CloseCurrentTab { confirm = true },
     },
     {
@@ -71,8 +71,17 @@ config.keys = {
     },
 }
 
+for i = 1, 8 do
+    -- CTRL+ALT + number to move to that position
+    table.insert(config.keys, {
+        key = tostring(i),
+        mods = 'CTRL|ALT',
+        action = wezterm.action.MoveTab(i - 1),
+    })
+end
+
 -- For example, changing the color scheme:
-config.color_scheme = 'Gruvbox dark, soft (base16)'
+config.color_scheme = 'ayu'
 
 -- and finally, return the configuration to wezterm
 return config

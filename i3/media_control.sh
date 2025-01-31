@@ -26,7 +26,7 @@ function get_volume_icon {
         volume_icon=" "
     else
         volume_icon=" "
-    fi 
+    fi
 }
 
 function show_volume_notif {
@@ -37,7 +37,7 @@ function show_volume_notif {
         pactl set-sink-volume @DEFAULT_SINK@ 100%
         volume=100
     fi
-    
+
     dunstify -t $notification_timeout -h string:x-dunst-stack-tag:volume_notif -h int:value:$volume "$volume_icon $volume%"
 }
 
