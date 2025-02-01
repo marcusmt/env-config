@@ -26,8 +26,8 @@ floating_maximum_size 2048 x 1280
 bindsym $mod+Control+Down exec --no-startup-id $HOME/.config/i3/single.sh
 bindsym $mod+Control+Up exec --no-startup-id $HOME/.config/i3/dual.sh
 
-bindsym $mod+r exec --no-startup-id "dmenu_run -nf '#1d2021' -nb '#a89984' -sb '#504945' -sf '#F8F8F2' -fn 'Hack Nerd Font-10' -p 'Search:'"
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu_run -nf '#1d2021' -nb '#a89984' -sb '#504945' -sf '#F8F8F2' -fn 'Hack Nerd Font-10' -p 'Search:'"
+bindsym $mod+r exec --no-startup-id dmenu_run
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 bindsym $mod+t exec gdmflexiserver
 

@@ -11,6 +11,7 @@ sudo add-apt-repository ppa:git-core/ppa -y
 /usr/lib/apt/apt-helper download-file https://debian.sur5r.net/i3/pool/main/s/sur5r-keyring/sur5r-keyring_2024.03.04_all.deb keyring.deb SHA256:f9bb4340b5ce0ded29b7e014ee9ce788006e9bbfe31e96c09b2118ab91fca734
 sudo apt install ./keyring.deb
 echo "deb http://debian.sur5r.net/i3/ $(grep '^DISTRIB_CODENAME=' /etc/lsb-release | cut -f2 -d=) universe" | sudo tee /etc/apt/sources.list.d/sur5r-i3.list
+rm -rf ~/keyring.deb
 
 # Wezterm
 curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /etc/apt/keyrings/wezterm-fury.gpg
@@ -25,10 +26,18 @@ Pin: origin packages.mozilla.org
 Pin-Priority: 1000
 ' | sudo tee /etc/apt/preferences.d/mozilla
 
+# VS Code
+sudo apt-get install wget gpg
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" |sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
+rm -f packages.microsoft.gpg
+
 sudo apt update -y
 sudo apt upgrade -y
 sudo ubuntu-drivers install
 sudo snap remove firefox
+sudo apt remove firefox
 snap-store --quit && sudo snap refresh snap-store
 sudo snap install nvim --classic
 
@@ -44,6 +53,7 @@ firefox \
 pavucontrol \
 pasystray \
 blueman \
+code \
 i3 -y
 
 sudo apt remove dunst i3lock xss-lock -y
@@ -51,9 +61,6 @@ sudo apt remove dunst i3lock xss-lock -y
 sudo apt autoremove -y
 
 curl -sS https://starship.rs/install.sh | sh
-curl -f https://zed.dev/install.sh | sh
-echo 'export PATH=$HOME/.local/bin:$PATH' >> ~/.bashrc
-source ~/.bashrc
 
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/Hack.zip
 mkdir ~/.fonts
@@ -92,17 +99,15 @@ curl -L https://gruvbox-wallpapers.pages.dev/wallpapers/irl/kace-rodriguez-p3OzJ
 cd ~/Downloads
 wget https://github.com/marcusmt/env-config/archive/refs/heads/main.zip
 unzip main.zip
-cp -r env-config-main/.config/i3 ~/.config/
-cp -r env-config-main/.config/picom/ ~/.config/
+cp -r env-config-main/i3 ~/.config/
+cp -r env-config-main/picom/ ~/.config/
 cp -r env-config-main/dunst/ ~/.config/
-cp -r env-config-main/zed/ ~/.config/
 cp env-config-main/.wezterm.lua ~/
 cp -r env-config-main/gtk-3.0 ~/.config
 cp -r env-config-main/gtk-4.0 ~/.config
 ```
 
 2. Eye candy stuff:
-    - GTK theme: https://www.pling.com/p/1681313/
     - Mouse Cursor theme: https://www.pling.com/p/1358330
     - Icons: https://www.gnome-look.org/p/1166289
 ```shell
@@ -110,7 +115,4 @@ mkdir ~/.icons
 mkdir ~/.themes
 tar -xvf ~/Downloads/01-Vimix-cursors.tar.xz -C ~/.icons
 tar -xvf ~/Downloads/papirus-icon-theme-20240501.tar.gz -C ~/.icons/
-rm -rf ~/.icons/eP* ~/.icons/Papirus ~/.icons/Papirus-Light
-unzip ~/Downloads/Gruvbox-Dark-BL-LB.zip -d ~/.themes/
-cp -r ~/.themes/Gruvbox-Dark/gtk-4.0/ ~/.config/
 ```
