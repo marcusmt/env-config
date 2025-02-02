@@ -68,8 +68,7 @@ unzip Hack.zip -d ~/.fonts
 fc-cache -fv
 rm Hack.zip
 
-echo "Xft.dpi: 192
-Xcursor.theme: Vimix-cursors" | tee .Xresources
+echo "Xft.dpi: 192" | tee .Xresources
 
 sudo usermod -aG video ${USER}
 
