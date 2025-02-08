@@ -37,9 +37,6 @@ pasystray \
 blueman \
 i3
 
-sudo apt --purge remove -y '*nvidia*'
-
-
 curl https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o chrome.deb
 sudo apt install -y ./chrome.deb
 rm -rf chrome.deb
