@@ -10,12 +10,12 @@ local config = wezterm.config_builder()
 config.keys = {
     {
         key = 'w',
-        mods = 'CTRL',
+        mods = 'ALT',
         action = wezterm.action.CloseCurrentPane { confirm = false },
     },
     {
         key = 'RightArrow',
-        mods = 'CTRL',
+        mods = 'ALT|SHIFT',
         action = wezterm.action.SplitPane {
             direction = 'Left',
             size = { Percent = 50 },
@@ -23,7 +23,7 @@ config.keys = {
     },
     {
         key = 'DownArrow',
-        mods = 'CTRL',
+        mods = 'ALT|SHIFT',
         action = wezterm.action.SplitPane {
             direction = 'Down',
             size = { Percent = 50 },
@@ -51,12 +51,12 @@ config.keys = {
     },
     {
         key = 't',
-        mods = 'CTRL',
+        mods = 'ALT',
         action = act.SpawnTab 'DefaultDomain'
     },
     {
         key = 'w',
-        mods = 'CTRL|SHIFT',
+        mods = 'ALT|SHIFT',
         action = wezterm.action.CloseCurrentTab { confirm = true },
     },
     {
@@ -75,7 +75,7 @@ for i = 1, 8 do
     -- CTRL+ALT + number to move to that position
     table.insert(config.keys, {
         key = tostring(i),
-        mods = 'CTRL|ALT',
+        mods = 'ALT|SHIFT',
         action = wezterm.action.MoveTab(i - 1),
     })
 end
