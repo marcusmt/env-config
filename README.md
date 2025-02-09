@@ -14,6 +14,7 @@ rm -rf ~/keyring.deb
 curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /etc/apt/keyrings/wezterm-fury.gpg
 echo 'deb [signed-by=/etc/apt/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list
 sudo add-apt-repository ppa:graphics-drivers/ppa
+sudo add-apt-repository ppa:papirus/papirus
 
 sudo apt --purge remove -y '*nvidia*'
 sudo apt update -y
@@ -36,6 +37,7 @@ pavucontrol \
 pasystray \
 blueman \
 policykit-1-gnome \
+papirus-icon-theme \
 i3
 
 curl https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o chrome.deb
@@ -92,14 +94,4 @@ cp -r env-config-main/zed/ ~/.config/
 cp env-config-main/.wezterm.lua ~/
 cp -r env-config-main/gtk-3.0 ~/.config
 cp -r env-config-main/gtk-4.0 ~/.config
-```
-
-2. Eye candy stuff:
-    - Mouse Cursor theme: https://www.pling.com/p/1358330
-    - Icons: https://www.gnome-look.org/p/1166289
-```shell
-mkdir ~/.icons
-mkdir ~/.themes
-tar -xvf ~/Downloads/01-Vimix-cursors.tar.xz -C ~/.icons
-tar -xvf ~/Downloads/papirus-* -C ~/.icons/
 ```
