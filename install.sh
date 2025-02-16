@@ -115,10 +115,10 @@ wget -O ~/Pictures/wall.jpg https://gruvbox-wallpapers.pages.dev/wallpapers/irl/
 
 # My Dots
 cd ~/Downloads/
-cp -r env-config-main/awesome ~/.config/
-cp -r env-config-main/picom/ ~/.config/
-cp -r env-config-main/fish/ ~/.config/
-cp -r env-config-main/gtk-3.0/ ~/.config/
-cp -r env-config-main/gtk-4.0/ ~/.config/
-cp -r env-config-main/.wezterm.lua/ ~/
+cp -r env-config-ubuntu-awesomewm/awesome ~/.config/
+cp -r env-config-ubuntu-awesomewm/picom/ ~/.config/
+cp -r env-config-ubuntu-awesomewm/fish/ ~/.config/
+cp -r env-config-ubuntu-awesomewm/gtk-3.0/ ~/.config/
+cp -r env-config-ubuntu-awesomewm/gtk-4.0/ ~/.config/
+cp env-config-ubuntu-awesomewm/.wezterm.lua ~/
 sudo sed -i "s/^GTK_THEME=.*$/GTK_THEME=\"Adwaita-dark\"/" /etc/environment || sudo sed -i "\$aGTK_THEME=\"Adwaita-dark\"" /etc/environment
