@@ -33,6 +33,7 @@ packages=(
   "policykit-1-gnome"
   "wezterm"
   "libfuse2"
+  "brightnessctl"
 )
 
 packages_picom=(
@@ -88,6 +89,9 @@ sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
 sudo mv /opt/nvim-linux-x86_64 /opt/nvim
 
 wget -qO - https://starship.rs/install.sh | sh -s -- -y
+
+git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
+$HOME/.fzf/install --all --no-fish
 
 sudo snap remove firefox
 sudo apt remove -y firefox
