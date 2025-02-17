@@ -2,10 +2,11 @@
 
 # Configure APT repositories
 ppa_list=(
-  "git-core/ppa"
-  "graphics-drivers/ppa"
-  "papirus/papirus"
-  "fish-shell/release-3"
+  "ppa:git-core/ppa"
+  "ppa:graphics-drivers/ppa"
+  "ppa:papirus/papirus"
+  "ppa:fish-shell/release-3"
+  "universe"
 )
 
 repositories=(
@@ -31,6 +32,7 @@ packages=(
   "pavucontrol"
   "policykit-1-gnome"
   "wezterm"
+  "libfuse2"
 )
 
 packages_picom=(
