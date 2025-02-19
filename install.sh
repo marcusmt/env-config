@@ -88,8 +88,6 @@ for repo in "${repositories[@]}"; do
 done
 
 sudo apt --purge remove -y '*nvidia*'
-sudo snap remove firefox
-sudo apt remove -y firefox gnome-terminal gnome-text-editor
 
 # System update
 sudo apt update -y && sudo apt upgrade -y && sudo ubuntu-drivers install && snap-store --quit && sudo snap refresh snap-store
@@ -132,6 +130,8 @@ cd dunst
 make
 sudo make install
 
+sudo snap remove firefox
+sudo apt remove -y firefox gnome-terminal gnome-text-editor dunst i3lock xss-lock
 sudo apt autoremove -y
 
 echo "Xft.dpi: 192" | tee .Xresources
