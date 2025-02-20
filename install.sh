@@ -134,7 +134,7 @@ sudo snap remove firefox
 sudo apt remove -y firefox gnome-terminal gnome-text-editor dunst i3lock xss-lock
 sudo apt autoremove -y
 
-echo "Xft.dpi: 192" | tee .Xresources
+echo "Xft.dpi: 192" | tee ~/.Xresources
 
 sudo usermod -aG video ${USER}
 
