@@ -3,14 +3,16 @@
 # github https://github.com/Shringe/dunst-media-control
 
 brightness_step=10
-notification_timeout=1000 # in milliseconds
+notification_timeout=10000 # in milliseconds
+backlight_device="nvidia_0" # Make this configurable
 
 function get_volume {
-    pactl get-sink-volume @DEFAULT_SINK@ | grep -Po '[0-9]{1,3}(?=%)' | head -1
+    volume=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -Po '[0-9]{1,3}(?=%)')
+    printf '%d' "$volume"  #Removes leading zeros
 }
 
 function get_brightness {
-    brightnessctl | grep -oP 'Current brightness: \K\d+'
+    brightnessctl -d "$backlight_device" | grep -oP 'Current brightness: \K\d+'
 }
 
 function get_mute {
@@ -52,14 +54,17 @@ case $1 in
     ;;
 
     brightness_up)
-    upValue=$(($(get_brightness) + $brightness_step))
-    brightnessctl -d nvidia_0 set $upValue
-    show_brightness_notif
+    current_brightness=$(get_brightness)
+    upValue=$((current_brightness + brightness_step))
+    upValue=$((upValue > 100 ? 100 : upValue)) # Clip to 100
+    brightnessctl -d "$backlight_device" set "$upValue" && show_brightness_notif || notify-send "Error setting brightness"
     ;;
 
     brightness_down)
-    downValue=$(($(get_brightness) - $brightness_step))
-    brightnessctl -d nvidia_0 set $downValue
-    show_brightness_notif
+    current_brightness=$(get_brightness)
+    downValue=$((current_brightness - brightness_step))
+    downValue=$((downValue < 0 ? 0 : downValue)) # Clip to 0
+    brightnessctl -d "$backlight_device" set "$downValue" && show_brightness_notif || notify-send "Error setting brightness"
     ;;
+
 esac
