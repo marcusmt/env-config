@@ -145,10 +145,11 @@ sudo usermod -aG video ${USER}
 
 # My Dots
 wget -O ~/Pictures/wall.jpg https://gruvbox-wallpapers.pages.dev/wallpapers/irl/kace-rodriguez-p3OzJuT_Dks.jpg
-#cd ~/Downloads/
-#cp -r env-config-ubuntu-awesomewm/i3 ~/.config/
-#cp -r env-config-ubuntu-awesomewm/picom/ ~/.config/
-#cp -r env-config-ubuntu-awesomewm/gtk-3.0/ ~/.config/
-#cp -r env-config-ubuntu-awesomewm/gtk-4.0/ ~/.config/
-#cp env-config-ubuntu-awesomewm/.wezterm.lua ~/
+cd ~/Downloads/
+cp -r env-config-ubuntu-i3/i3 ~/.config/
+cp -r env-config-ubuntu-i3/picom/ ~/.config/
+cp -r env-config-ubuntu-i3/dunst/ ~/.config/
+cp -r env-config-ubuntu-i3/gtk-3.0/ ~/.config/
+cp -r env-config-ubuntu-i3/gtk-4.0/ ~/.config/
+cp env-config-ubuntu-i3/.wezterm.lua ~/
 sudo sed -i "s/^GTK_THEME=.*$/GTK_THEME=\"Adwaita-dark\"/" /etc/environment || sudo sed -i "\$aGTK_THEME=\"Adwaita-dark\"" /etc/environment

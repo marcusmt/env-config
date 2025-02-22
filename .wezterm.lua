@@ -4,6 +4,7 @@ local act = wezterm.action
 
 -- This will hold the configuration.
 local config = wezterm.config_builder()
+config.default_prog = { 'zsh', '-l' }
 
 -- This is where you actually apply your config choices
 
