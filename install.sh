@@ -2,6 +2,7 @@
 
 # Configure APT repositories
 ppa_list=(
+  "ppa:fish-shell/release-3"
   "ppa:git-core/ppa"
   "ppa:graphics-drivers/ppa"
   "ppa:papirus/papirus"
@@ -9,8 +10,8 @@ ppa_list=(
 )
 
 repositories=(
- "wezterm-fury https://apt.fury.io/wez/gpg.key https://apt.fury.io/wez/ * *"
  "packages.microsoft https://packages.microsoft.com/keys/microsoft.asc https://packages.microsoft.com/repos/code stable main"
+ "wezterm-fury https://apt.fury.io/wez/gpg.key https://apt.fury.io/wez/ * *"
 )
 
 packages=(
@@ -33,7 +34,6 @@ packages=(
   "pavucontrol"
   "policykit-1-gnome"
   "wezterm"
-  "zsh"
 )
 
 packages_picom=(
@@ -78,7 +78,7 @@ packages_dunst=(
 )
 
 for ppa in "${ppa_list[@]}"; do
-  sudo add-apt-repository -y "ppa:$ppa"
+  sudo add-apt-repository -y "$ppa"
 done
 
 /usr/lib/apt/apt-helper download-file https://debian.sur5r.net/i3/pool/main/s/sur5r-keyring/sur5r-keyring_2024.03.04_all.deb $HOME/keyring.deb SHA256:f9bb4340b5ce0ded29b7e014ee9ce788006e9bbfe31e96c09b2118ab91fca734
