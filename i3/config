@@ -10,6 +10,7 @@ exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id nm-applet
 exec --no-startup-id /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
 exec --no-startup-id picom -b --config $HOME/.config/picom/picom.conf
+#exec --no-startup-id nvidia-settings --assign CurrentMetaMode="DP-0: 2560x1440_240 +0+0 {ForceCompositionPipeline=On, ForceFullCompositionPipeline=On}, HDMI-0: nvidia-auto-select +2560+0"
 exec_always --no-startup-id feh --bg-fil $HOME/Pictures/wall.jpg
 
 bindsym $mod+t exec gdmflexiserver
