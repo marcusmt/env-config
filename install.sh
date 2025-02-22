@@ -112,7 +112,7 @@ sudo mv /opt/nvim-linux-x86_64 /opt/nvim
 wget -qO - https://starship.rs/install.sh | sh -s -- -y
 
 git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
-$HOME/.fzf/install --all --no-fish
+$HOME/.fzf/install --all
 
 wget https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hack.zip
 mkdir ~/.fonts
