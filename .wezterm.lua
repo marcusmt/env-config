@@ -11,7 +11,7 @@ config.default_prog = { 'fish', '-l' }
 config.keys = {
     {
         key = 'RightArrow',
-        mods = 'CTRL|SHIFT',
+        mods = 'ALT|SHIFT',
         action = wezterm.action.SplitPane {
             direction = 'Right',
             size = { Percent = 50 },
@@ -19,7 +19,7 @@ config.keys = {
     },
     {
         key = 'LeftArrow',
-        mods = 'CTRL|SHIFT',
+        mods = 'ALT|SHIFT',
         action = wezterm.action.SplitPane {
             direction = 'Left',
             size = { Percent = 50 },
@@ -27,7 +27,7 @@ config.keys = {
     },
     {
         key = 'DownArrow',
-        mods = 'CTRL|SHIFT',
+        mods = 'ALT|SHIFT',
         action = wezterm.action.SplitPane {
             direction = 'Down',
             size = { Percent = 50 },
@@ -35,7 +35,7 @@ config.keys = {
     },
     {
         key = 'UpArrow',
-        mods = 'CTRL|SHIFT',
+        mods = 'ALT|SHIFT',
         action = wezterm.action.SplitPane {
             direction = 'Up',
             size = { Percent = 50 },
@@ -43,56 +43,55 @@ config.keys = {
     },
     {
         key = 'LeftArrow',
-        mods = 'CTRL',
+        mods = 'ALT',
         action = act.ActivatePaneDirection 'Left',
     },
     {
         key = 'RightArrow',
-        mods = 'CTRL',
+        mods = 'ALT',
         action = act.ActivatePaneDirection 'Right',
     },
     {
         key = 'UpArrow',
-        mods = 'CTRL',
+        mods = 'ALT',
         action = act.ActivatePaneDirection 'Up',
     },
     {
         key = 'DownArrow',
-        mods = 'CTRL',
+        mods = 'ALT',
         action = act.ActivatePaneDirection 'Down',
     },
     {
         key = 'e',
-        mods = 'CTRL',
+        mods = 'ALT',
         action = act.SpawnTab 'DefaultDomain'
     },
     {
         key = 'w',
-        mods = 'CTRL',
+        mods = 'ALT',
         action = wezterm.action.CloseCurrentPane { confirm = false },
     },
     {
         key = 'w',
-        mods = 'CTRL|SHIFT',
+        mods = 'ALT|SHIFT',
         action = wezterm.action.CloseCurrentTab { confirm = true },
     },
     {
         key = 'a',
-        mods = 'CTRL',
+        mods = 'ALT',
         action = act.MoveTabRelative(-1)
     },
     {
         key = 'd',
-        mods = 'CTRL',
+        mods = 'ALT',
         action = act.MoveTabRelative(1)
     },
 }
 
 for i = 1, 8 do
-    -- CTRL+ALT + number to move to that position
     table.insert(config.keys, {
         key = tostring(i),
-        mods = 'CTRL|SHIFT',
+        mods = 'ALT|SHIFT',
         action = wezterm.action.MoveTab(i - 1),
     })
 end

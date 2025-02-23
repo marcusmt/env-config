@@ -110,7 +110,6 @@ sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
 sudo mv /opt/nvim-linux-x86_64 /opt/nvim
 
 wget -qO - https://starship.rs/install.sh | sh -s -- -y
-echo "starship init fish | source" >> $HOME/.config/fish/config.fish
 
 git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
 $HOME/.fzf/install --all
@@ -154,3 +153,6 @@ cp -r env-config-ubuntu-i3/gtk-3.0/ $HOME/.config/
 cp -r env-config-ubuntu-i3/gtk-4.0/ $HOME/.config/
 cp env-config-ubuntu-i3/.wezterm.lua $HOME/
 sudo sed -i "s/^GTK_THEME=.*$/GTK_THEME=\"Adwaita-dark\"/" /etc/environment || sudo sed -i "\$aGTK_THEME=\"Adwaita-dark\"" /etc/environment
+
+fish
+echo "starship init fish | source" >> $HOME/.config/fish/config.fish
