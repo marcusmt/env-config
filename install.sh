@@ -28,7 +28,6 @@ packages=(
   "git"
   "i3"
   "libfuse2"
-  "lxappearance"
   "papirus-icon-theme"
   "pasystray"
   "pavucontrol"
@@ -152,7 +151,4 @@ cp -r env-config-ubuntu-i3/dunst/ $HOME/.config/
 cp -r env-config-ubuntu-i3/gtk-3.0/ $HOME/.config/
 cp -r env-config-ubuntu-i3/gtk-4.0/ $HOME/.config/
 cp env-config-ubuntu-i3/.wezterm.lua $HOME/
-sudo sed -i "s/^GTK_THEME=.*$/GTK_THEME=\"Adwaita-dark\"/" /etc/environment || sudo sed -i "\$aGTK_THEME=\"Adwaita-dark\"" /etc/environment
-
-fish
-echo "starship init fish | source" >> $HOME/.config/fish/config.fish
+sudo sed -i "\$aGTK_THEME=\"Adwaita-dark\"" /etc/environment
