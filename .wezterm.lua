@@ -85,7 +85,7 @@ config.keys = {
         key = 'd',
         mods = 'ALT',
         action = act.MoveTabRelative(1)
-    },
+    }
 }
 
 for i = 1, 8 do
@@ -102,6 +102,7 @@ config.enable_scroll_bar = true
 config.pane_focus_follows_mouse = true
 config.scrollback_lines = 9999999
 config.tab_bar_at_bottom = true
+config.font = wezterm.font 'Hack Nerd Font'
 
 -- and finally, return the configuration to wezterm
 return config
