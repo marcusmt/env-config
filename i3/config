@@ -8,7 +8,7 @@ popup_during_fullscreen all
 
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id nm-applet
-exec --no-startup-id /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
+exec --no-startup-id /usr/libexec/xfce-polkit &
 exec --no-startup-id picom -b --config $HOME/.config/picom/picom.conf
 exec_always --no-startup-id feh --bg-fil $HOME/Pictures/wall.jpg
 
@@ -22,7 +22,7 @@ bindsym Print                 exec "flameshot gui"
 bindsym $mod+Down             exec --no-startup-id $HOME/.config/i3/single.sh
 bindsym $mod+Up               exec --no-startup-id $HOME/.config/i3/dual.sh
 bindsym $mod+Shift+Up         exec --no-startup-id $HOME/.config/i3/dual_home.sh
-bindsym $mod+Return           exec wezterm
+bindsym $mod+Return           exec ghostty
 bindsym $mod+Shift+q          kill
 bindsym $mod+d                exec --no-startup-id dmenu_run
 bindsym $mod+Shift+c          reload
