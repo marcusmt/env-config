@@ -17,14 +17,8 @@ print_header() {
 install_packages() {
   print_header "Installing Packages"
 
-  # My Dots
-  wget https://github.com/marcusmt/env-config/archive/refs/heads/fedora-i3.zip -O $HOME/Downloads/env-config-fedora-3.zip
-  unzip $HOME/Downloads/env-config-fedora-3.zip -d $HOME/Downloads
-  mv $HOME/Downloads/env-config-fedora-i3/i3/* $HOME/.config/
-  mv $HOME/Downloads/env-config-fedora-i3/picom/* $HOME/.config/
-  mv $HOME/Downloads/env-config-fedora-i3/dunst/* $HOME/.config/
-  mv $HOME/Downloads/env-config-fedora-i3/fish/* $HOME/.config/
-  rm -rf $HOME/Downloads/env-config-fedora-3
+  # Dots
+  cp -r .config $HOME/.config/
   
   wget -O $HOME/Pictures/wall.jpg https://gruvbox-wallpapers.pages.dev/wallpapers/irl/kace-rodriguez-p3OzJuT_Dks.jpg
   sudo sh -c 'echo "GTK_THEME=Adwaita-dark" >> /etc/environment'
@@ -41,23 +35,24 @@ install_packages() {
   
   packages=(
     "akmod-nvidia"
-    "code"
-    "wezterm"
     "blueman"
-    "plasma-workspace-x11"
-    "dmenu"
-    "i3"
-    "i3status"
     "brightnessctl"
+    "code"
+    "dmenu"
     "dunst"
     "feh"
     "fish"
     "flameshot"
-    "wezterm"
-    "papirus-icon-theme"
+    "git"
+    "i3"
+    "i3status"
+    "papirus-icon-theme-dark"
     "pasystray"
     "pavucontrol"
     "picom"
+    "plasma-workspace-x11"
+    "wezterm"
+    "wezterm"
     "xkill"
   )
 
