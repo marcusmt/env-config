@@ -13,6 +13,3 @@ cd env-config-fedora-i3/
 ```shell
 sudo plymouth-set-default-theme -R bgrt
 ```
-
-## To customise GMD
-1. Download from Flathub [GDM-Seetings](https://flathub.org/apps/io.github.realmazharhussain.GdmSettings)
