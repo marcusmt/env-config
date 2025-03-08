@@ -18,7 +18,7 @@ install_packages() {
   print_header "Installing Packages"
 
   # Dots
-  cp -r .config $HOME/.config/
+  cp -r .config/* $HOME/.config/
   
   wget -O $HOME/Pictures/wall.jpg https://gruvbox-wallpapers.pages.dev/wallpapers/irl/kace-rodriguez-p3OzJuT_Dks.jpg
   sudo sh -c 'echo "GTK_THEME=Adwaita-dark" >> /etc/environment'
