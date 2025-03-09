@@ -24,21 +24,28 @@ install_packages() {
   sudo sh -c 'echo "GTK_THEME=Adwaita-dark" >> /etc/environment'
 
   # Font
-  wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/JetBrainsMono.zip -O $HOME/Downloads/JetBrainsMono.zip
+  wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/Noto.zip -O $HOME/Downloads/Noto.zip
   mkdir $HOME/.fonts
-  unzip $HOME/Downloads/JetBrainsMono.zip -d $HOME/.fonts
+  unzip $HOME/Downloads/Noto.zip -d $HOME/.fonts
   fc-cache -fv
-  rm $HOME/Downloads/JetBrainsMono.zip
+  rm $HOME/Downloads/Noto.zip
   
   # Xorg resolution
   echo "Xft.dpi: 144" | tee $HOME/.Xresources
   
+  sudo dnf install -y akmod-nvidia
+  
   packages=(
-    "akmod-nvidia"
     "code"
+    "dex-autostart"
+    "dmenu"
+    "dunst"
     "feh"
     "fish"
     "git"
+    "gnome-themes-extra"
+    "i3"
+    "i3status"
     "picom"
     "plasma-workspace-x11"
     "wezterm"
@@ -46,25 +53,6 @@ install_packages() {
   )
 
   sudo dnf install -y --setopt=install_weak_deps=False "${packages[@]}"
-
-  # K9s
-  wget https://github.com/derailed/k9s/releases/latest/download/k9s_linux_amd64.rpm -O $HOME/Downloads/k9s.rpm
-  sudo dnf install -y $HOME/Downloads/k9s.rpm
-
-  # Kubectx and Kubens
-  sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
-  sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
-  sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
-
-  ln -s /opt/kubectx/completion/kubectx.fish ~/.config/fish/completions/
-  ln -s /opt/kubectx/completion/kubens.fish ~/.config/fish/completions/
-  
-  # Startship
-  wget -qO - https://starship.rs/install.sh | sh -s -- -y
-
-  # Fzf
-  git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
-  $HOME/.fzf/install --all
 }
 
 # Function to handle system updates
@@ -79,6 +67,13 @@ sys_update() {
   sudo mv /opt/nvim-linux-x86_64 /opt/nvim
   rm $HOME/Downloads/nvim-linux-x86_64.tar.gz  
   echo -e "${GREEN}System update completed.${NC}"
+
+  # Fzf
+  git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
+  $HOME/.fzf/install --all
+
+  # Startship
+  wget -qO - https://starship.rs/install.sh | sh -s -- -y
 }
 
 # Function to handle system configuration
