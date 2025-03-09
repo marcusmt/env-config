@@ -21,7 +21,8 @@ install_packages() {
   cp -r .config/* $HOME/.config/
   
   wget -O $HOME/Pictures/wall.jpg https://gruvbox-wallpapers.pages.dev/wallpapers/irl/kace-rodriguez-p3OzJuT_Dks.jpg
-  sudo sh -c 'echo "GTK_THEME=Adwaita-dark" >> /etc/environment'
+  sudo sh -c 'echo "GTK_THEME=Adwaita-dark
+  QT_QPA_PLATFORMTHEME=qt6ct" >> /etc/environment'
 
   # Font
   wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/Noto.zip -O $HOME/Downloads/Noto.zip
@@ -48,11 +49,31 @@ install_packages() {
     "i3status"
     "picom"
     "plasma-workspace-x11"
+    "qt6ct"
     "wezterm"
     "xkill"
   )
 
   sudo dnf install -y --setopt=install_weak_deps=False "${packages[@]}"
+  
+  read -r -p "Type exit after openning Fish. Configure Fish? (y/n)" response
+  if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+    fish
+    # K9s
+    wget https://github.com/derailed/k9s/releases/latest/download/k9s_linux_amd64.rpm -O $HOME/Downloads/k9s.rpm
+    sudo dnf install -y $HOME/Downloads/k9s.rpm
+
+    # Kubectx and Kubens
+    sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
+    sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
+    sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
+
+    ln -s /opt/kubectx/completion/kubectx.fish ~/.config/fish/completions/
+    ln -s /opt/kubectx/completion/kubens.fish ~/.config/fish/completions/
+  else
+    echo "Fish config aborted"
+  fi
+  
 }
 
 # Function to handle system updates

@@ -1,10 +1,17 @@
 set $mod Mod4
-font pango:JetBrainsMonoNL Nerd Font Propo 0
+font pango: NotoSansM Nerd Font Propo 0
 floating_modifier $mod
-gaps inner 4
+gaps inner 12
 smart_gaps on
 focus_wrapping workspace
 popup_during_fullscreen all
+
+default_border pixel 0
+for_window [class=.*] border pixel 0
+default_floating_border pixel 0
+
+floating_minimum_size 1024 x 768
+floating_maximum_size 2048 x 1280
 
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id /usr/libexec/kf6/polkit-kde-authentication-agent-1
@@ -17,10 +24,11 @@ bindsym $mod+z                exec dunstctl set-paused true
 bindsym $mod+Shift+z          exec dunstctl set-paused false
 bindsym $mod+h                move scratchpad
 bindsym $mod+Shift+h          scratchpad show
-bindsym Print                 exec "flameshot gui"
-bindsym $mod+Down             exec --no-startup-id $HOME/.config/i3/single.sh
-bindsym $mod+Up               exec --no-startup-id $HOME/.config/i3/dual.sh
-bindsym $mod+Shift+Up         exec --no-startup-id $HOME/.config/i3/dual_home.sh
+bindsym Print                 exec "spectacle -r"
+bindsym Print+Shift           exec "spectacle -m"
+bindsym $mod+Shift+Down       exec --no-startup-id $HOME/.config/i3/single.sh
+bindsym $mod+Shift+Up         exec --no-startup-id $HOME/.config/i3/dual.sh
+bindsym $mod+Ctrl+Up          exec --no-startup-id $HOME/.config/i3/dual_home.sh
 bindsym $mod+Return           exec wezterm
 bindsym $mod+Shift+q          kill
 bindsym $mod+d                exec --no-startup-id dmenu_run
@@ -84,7 +92,7 @@ bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
 bar {
-    font pango:JetBrainsMonoNL Nerd Font Propo 12
+    font pango: NotoSansM Nerd Font Propo 12
     i3bar_command i3bar --transparency
     status_command i3status --config ~/.config/i3/i3status.conf
     workspace_buttons no
