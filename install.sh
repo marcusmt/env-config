@@ -35,15 +35,12 @@ install_packages() {
   
   packages=(
     "akmod-nvidia"
-    "blueman"
     "code"
+    "feh"
     "fish"
-    "flameshot"
     "git"
-    "papirus-icon-theme-dark"
-    "pasystray"
-    "pavucontrol"
     "picom"
+    "plasma-workspace-x11"
     "wezterm"
     "xkill"
   )
