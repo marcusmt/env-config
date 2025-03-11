@@ -37,64 +37,26 @@ install_packages() {
   sudo dnf install -y akmod-nvidia
   
   packages=(
-    "code"
     "dex-autostart"
     "dmenu"
-    "dunst"
     "feh"
-    "fish"
-    "git"
     "gnome-themes-extra"
     "i3"
     "i3status"
-    "picom"
     "plasma-workspace-x11"
     "qt6ct"
-    "wezterm"
     "xkill"
   )
 
   sudo dnf install -y --setopt=install_weak_deps=False "${packages[@]}"
-  
-  read -r -p "Type exit after openning Fish. Configure Fish? (y/n)" response
-  if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    fish
-    # K9s
-    wget https://github.com/derailed/k9s/releases/latest/download/k9s_linux_amd64.rpm -O $HOME/Downloads/k9s.rpm
-    sudo dnf install -y $HOME/Downloads/k9s.rpm
-
-    # Kubectx and Kubens
-    sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
-    sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
-    sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
-
-    ln -s /opt/kubectx/completion/kubectx.fish ~/.config/fish/completions/
-    ln -s /opt/kubectx/completion/kubens.fish ~/.config/fish/completions/
-  else
-    echo "Fish config aborted"
-  fi
-  
 }
 
 # Function to handle system updates
 sys_update() {
   print_header "Performing System Update"
   sudo dnf update -y && sudo dnf upgrade -y
-  
-  # Neovim
-  wget -O $HOME/Downloads/nvim-linux-x86_64.tar.gz https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
-  sudo rm -rf /opt/nvim
-  sudo tar -C /opt -xzf $HOME/Downloads/nvim-linux-x86_64.tar.gz
-  sudo mv /opt/nvim-linux-x86_64 /opt/nvim
-  rm $HOME/Downloads/nvim-linux-x86_64.tar.gz  
+
   echo -e "${GREEN}System update completed.${NC}"
-
-  # Fzf
-  git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
-  $HOME/.fzf/install --all
-
-  # Startship
-  wget -qO - https://starship.rs/install.sh | sh -s -- -y
 }
 
 # Function to handle system configuration
@@ -104,13 +66,6 @@ configure_system() {
   # Add RPMFusion repo
   sudo dnf -y install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
   sudo dnf -y config-manager setopt fedora-cisco-openh264.enabled=1
-
-  # VS Code
-  sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-  echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\nautorefresh=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/yum.repos.d/vscode.repo > /dev/null
-
-  # Wezterm
-  sudo dnf -y copr enable wezfurlong/wezterm-nightly
 
   echo -e "${GREEN}Executing sysupdate as part of configuration.${NC}"
   sys_update
