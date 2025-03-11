@@ -5,7 +5,6 @@ ppa_list=(
   "ppa:fish-shell/release-3"
   "ppa:git-core/ppa"
   "ppa:graphics-drivers/ppa"
-  "ppa:papirus/papirus"
   "universe"
 )
 
@@ -28,7 +27,7 @@ packages=(
   "git"
   "i3"
   "libfuse2"
-  "papirus-icon-theme"
+  "nvidia-driver-570"
   "pasystray"
   "pavucontrol"
   "policykit-1-gnome"
@@ -91,33 +90,20 @@ for repo in "${repositories[@]}"; do
     echo "deb [signed-by=/etc/apt/keyrings/${name}.gpg] $source_parts" | sudo tee "/etc/apt/sources.list.d/${name}.list" > /dev/null
 done
 
-sudo apt --purge remove -y '*nvidia*'
-
 # System update
 sudo apt update -y && sudo apt upgrade -y && sudo ubuntu-drivers install && snap-store --quit && sudo snap refresh snap-store
+sudo apt --purge remove -y '*nvidia*'
 
 # Install packages
 sudo apt install -y "${packages[@]}" "${packages_picom[@]}" "${packages_dunst[@]}"
+sudo snap remove firefox
+sudo apt remove -y firefox gnome-terminal gnome-text-editor dunst i3lock xss-lock
 
-wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O chrome.deb
-sudo apt install -y ./chrome.deb
-rm -rf chrome.deb
-
-wget -O nvim-linux-x86_64.tar.gz https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
-sudo rm -rf /opt/nvim
-sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
-sudo mv /opt/nvim-linux-x86_64 /opt/nvim
-
-wget -qO - https://starship.rs/install.sh | sh -s -- -y
-
-git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
-$HOME/.fzf/install --all
-
-wget https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hack.zip
+wget https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Noto.zip
 mkdir $HOME/.fonts
-unzip Hack.zip -d $HOME/.fonts
+unzip Noto.zip -d $HOME/.fonts
 fc-cache -fv
-rm Hack.zip
+rm Noto.zip
 
 # Picom
 cd $HOME/Downloads
@@ -134,11 +120,9 @@ cd dunst
 make
 sudo make install
 
-sudo snap remove firefox
-sudo apt remove -y firefox gnome-terminal gnome-text-editor dunst i3lock xss-lock
 sudo apt autoremove -y
 
-echo "Xft.dpi: 192" | tee $HOME/.Xresources
+echo "Xft.dpi: 144" | tee $HOME/.Xresources
 
 sudo usermod -aG video ${USER}
 
@@ -148,7 +132,5 @@ cd $HOME/Downloads/
 cp -r env-config-ubuntu-i3/i3 $HOME/.config/
 cp -r env-config-ubuntu-i3/picom/ $HOME/.config/
 cp -r env-config-ubuntu-i3/dunst/ $HOME/.config/
-cp -r env-config-ubuntu-i3/gtk-3.0/ $HOME/.config/
-cp -r env-config-ubuntu-i3/gtk-4.0/ $HOME/.config/
 cp env-config-ubuntu-i3/.wezterm.lua $HOME/
 sudo sed -i "\$aGTK_THEME=\"Adwaita-dark\"" /etc/environment
