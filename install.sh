@@ -2,36 +2,18 @@
 
 # Configure APT repositories
 ppa_list=(
-  "ppa:fish-shell/release-3"
   "ppa:git-core/ppa"
   "ppa:graphics-drivers/ppa"
   "universe"
 )
 
-repositories=(
- "packages.microsoft https://packages.microsoft.com/keys/microsoft.asc https://packages.microsoft.com/repos/code stable main"
- "wezterm-fury https://apt.fury.io/wez/gpg.key https://apt.fury.io/wez/ * *"
-)
-
 packages=(
-  "apt-transport-https"
-  "arandr"
-  "blueman"
-  "brightnessctl"
   "build-essential"
   "cmake"
-  "code"
-  "feh"
-  "fish"
-  "flameshot"
   "git"
   "i3"
   "libfuse2"
   "nvidia-driver-570"
-  "pasystray"
-  "pavucontrol"
-  "policykit-1-gnome"
-  "wezterm"
 )
 
 packages_picom=(
@@ -84,12 +66,6 @@ sudo apt install $HOME/keyring.deb
 echo "deb http://debian.sur5r.net/i3/ $(grep '^DISTRIB_CODENAME=' /etc/lsb-release | cut -f2 -d=) universe" | sudo tee /etc/apt/sources.list.d/sur5r-i3.list
 rm -rf $HOME/keyring.deb
 
-for repo in "${repositories[@]}"; do
-    IFS=' ' read -r name key_url source_parts <<< "$repo"
-    sudo wget -qO - $key_url | sudo gpg --yes --dearmor -o "/etc/apt/keyrings/${name}.gpg"
-    echo "deb [signed-by=/etc/apt/keyrings/${name}.gpg] $source_parts" | sudo tee "/etc/apt/sources.list.d/${name}.list" > /dev/null
-done
-
 # System update
 sudo apt update -y && sudo apt upgrade -y && sudo ubuntu-drivers install && snap-store --quit && sudo snap refresh snap-store
 sudo apt --purge remove -y '*nvidia*'
@@ -122,15 +98,13 @@ sudo make install
 
 sudo apt autoremove -y
 
-echo "Xft.dpi: 144" | tee $HOME/.Xresources
+echo "Xft.dpi: 192" | tee $HOME/.Xresources
 
 sudo usermod -aG video ${USER}
 
 # My Dots
-wget -O $HOME/Pictures/wall.jpg https://gruvbox-wallpapers.pages.dev/wallpapers/irl/kace-rodriguez-p3OzJuT_Dks.jpg
 cd $HOME/Downloads/
 cp -r env-config-ubuntu-i3/i3 $HOME/.config/
 cp -r env-config-ubuntu-i3/picom/ $HOME/.config/
 cp -r env-config-ubuntu-i3/dunst/ $HOME/.config/
-cp env-config-ubuntu-i3/.wezterm.lua $HOME/
 sudo sed -i "\$aGTK_THEME=\"Adwaita-dark\"" /etc/environment

@@ -4,7 +4,6 @@ floating_modifier $mod
 gaps inner 4
 smart_gaps on
 focus_wrapping workspace
-popup_during_fullscreen all
 
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id nm-applet
