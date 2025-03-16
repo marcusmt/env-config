@@ -147,7 +147,7 @@ configure_system() {
   sudo apt update -y && sudo apt upgrade -y && sudo ubuntu-drivers install && snap-store --quit && sudo snap refresh snap-store
   sudo apt --purge remove -y '*nvidia*'
 
-  sudo apt install -y "${packages[@]}" "${packages_picom[@]}" "${packages_dunst[@]}"
+  sudo apt install -y "${packages[@]}" "${packages_picom[@]}" "${packages_dunst[@]}" --allow-change-held-packages
   sudo snap remove firefox
   sudo apt remove -y firefox gnome-terminal gnome-text-editor dunst i3lock xss-lock
 
