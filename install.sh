@@ -164,6 +164,7 @@ configure_system() {
   cp -r dunst/ $HOME/.config/
   cp -r zed/ $HOME/.config/
   cp -r gtk-3.0/ $HOME/.config/
+  cp -r fish/ $HOME/.config/
   cp .wezterm.lua $HOME
   sudo sed -i "\$aGTK_THEME=\"Adwaita-dark\"" /etc/environment
 
