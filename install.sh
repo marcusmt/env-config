@@ -78,7 +78,7 @@ packages_dunst=(
 sys_update() {
   sudo apt update -y && sudo apt upgrade -y
 
-  wget https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hack.zip -o $HOME/Downloads/Hack.zip
+  wget https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hack.zip -O $HOME/Downloads/Hack.zip
   mkdir $HOME/.fonts
   unzip $HOME/Downloads/Hack.zip -d $HOME/.fonts
   fc-cache -fv
@@ -123,7 +123,8 @@ sys_update() {
   $HOME/.fzf/install --all
 
   # Clean all
-  rm -rf $HOME/Downloads/*
+  cd $HOME/Downloads
+  rm -rf *
 }
 
 configure_system() {
@@ -137,9 +138,9 @@ configure_system() {
     echo "deb [signed-by=/etc/apt/keyrings/${name}.gpg] $source_parts" | sudo tee "/etc/apt/sources.list.d/${name}.list" > /dev/null
   done
 
-  /usr/lib/apt/apt-helper download-file https://debian.sur5r.net/i3/pool/main/s/sur5r-keyring/sur5r-keyring_2025.03.09_all.deb $HOME/Downloads/keyring.deb SHA256:2c2601e6053d5c68c2c60bcd088fa9797acec5f285151d46de9c830aaba6173c
-  sudo apt install $HOME/Downloads/keyring.deb
-  echo "deb http://debian.sur5r.net/i3/ $(grep '^DISTRIB_CODENAME=' /etc/lsb-release | cut -f2 -d=) universe" | sudo tee /etc/apt/sources.list.d/sur5r-i3.list
+  /usr/lib/apt/apt-helper download-file https://debian.sur5r.net/i3/pool/main/s/sur5r-keyring/sur5r-keyring_2025.03.09_all.deb keyring.deb SHA256:2c2601e6053d5c68c2c60bcd088fa9797acec5f285151d46de9c830aaba6173c
+  sudo apt install ./keyring.deb
+  echo "deb [signed-by=/usr/share/keyrings/sur5r-keyring.gpg] http://debian.sur5r.net/i3/ $(grep '^VERSION_CODENAME=' /etc/os-release | cut -f2 -d=) universe" | sudo tee /etc/apt/sources.list.d/sur5r-i3.list
 
   sudo apt update -y && sudo apt upgrade -y && sudo ubuntu-drivers install && snap-store --quit && sudo snap refresh snap-store
   sudo apt --purge remove -y '*nvidia*'
@@ -156,24 +157,25 @@ configure_system() {
 
   wget -O $HOME/Pictures/wall.jpg https://gruvbox-wallpapers.pages.dev/wallpapers/irl/kace-rodriguez-p3OzJuT_Dks.jpg
 
-  cd $HOME/Downloads/
-  cp -r env-config-ubuntu-i3/i3 $HOME/.config/
-  cp -r env-config-ubuntu-i3/picom/ $HOME/.config/
-  cp -r env-config-ubuntu-i3/dunst/ $HOME/.config/
+  cp -r i3 $HOME/.config/
+  cp -r picom/ $HOME/.config/
+  cp -r dunst/ $HOME/.config/
+  cp -r zed/ $HOME/.config/
+  cp .wezterm.lua $HOME
   sudo sed -i "\$aGTK_THEME=\"Adwaita-dark\"" /etc/environment
 
   # Ripgrep
-  wget https://github.com/BurntSushi/ripgrep/releases/latest/download/ripgrep_14.1.1-1_amd64.deb -o $HOME/Downloads/ripgrep_14.1.1-1_amd64.deb
+  wget https://github.com/BurntSushi/ripgrep/releases/latest/download/ripgrep_14.1.1-1_amd64.deb -O $HOME/Downloads/ripgrep_14.1.1-1_amd64.deb
   sudo apt install $HOME/Downloads/ripgrep_14.1.1-1_amd64.deb
 
   # Lua
-  wget https://www.lua.org/ftp/lua-5.4.7.tar.gz -o $HOME/Downloads/lua-5.4.7.tar.gz
+  wget https://www.lua.org/ftp/lua-5.4.7.tar.gz -O $HOME/Downloads/lua-5.4.7.tar.gz
   tar -xvf $HOME/Downloads/lua-5.4.7.tar.gz -C $HOME/Downloads
   cd $HOME/Downloads/lua-5.4.7
   make all test
   sudo make install
 
-  wget https://luarocks.github.io/luarocks/releases/luarocks-3.11.1.tar.gz -o $HOME/Downloads/luarocks-3.11.1.tar.gz
+  wget https://luarocks.github.io/luarocks/releases/luarocks-3.11.1.tar.gz -O $HOME/Downloads/luarocks-3.11.1.tar.gz
   tar -xvf $HOME/Downloads/luarocks-3.11.1.tar.gz -C $HOME/Downloads
   cd $HOME/Downloads/luarocks-3.11.1
   ./configure --with-lua-include=/usr/local/include
