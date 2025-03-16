@@ -6,7 +6,6 @@ ppa_list=(
   "ppa:git-core/ppa"
   "ppa:graphics-drivers/ppa"
   "universe"
-  "ppa:papirus/papirus"
 )
 
 repositories=(
@@ -26,8 +25,8 @@ packages=(
   "i3"
   "libfuse2"
   "libreadline-dev"
+  "lxappearance"
   "nvidia-driver-570"
-  "Papirus-Dark"
   "pasystray"
   "pavucontrol"
   "policykit-1-gnome"
@@ -122,6 +121,9 @@ sys_update() {
   git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
   $HOME/.fzf/install --all
 
+  # Icons
+  wget -qO- https://git.io/papirus-icon-theme-install | sh
+
   # Clean all
   cd $HOME/Downloads
   rm -rf *
@@ -161,6 +163,7 @@ configure_system() {
   cp -r picom/ $HOME/.config/
   cp -r dunst/ $HOME/.config/
   cp -r zed/ $HOME/.config/
+  cp -r gtk-3.0/ $HOME/.config/
   cp .wezterm.lua $HOME
   sudo sed -i "\$aGTK_THEME=\"Adwaita-dark\"" /etc/environment
 
