@@ -2,18 +2,36 @@
 
 # Configure APT repositories
 ppa_list=(
+  "ppa:fish-shell/release-3"
   "ppa:git-core/ppa"
   "ppa:graphics-drivers/ppa"
   "universe"
+  "ppa:papirus/papirus"
+)
+
+repositories=(
+ "wezterm-fury https://apt.fury.io/wez/gpg.key https://apt.fury.io/wez/ * *"
 )
 
 packages=(
+  "arandr"
+  "blueman"
   "build-essential"
+  "cbatticon"
   "cmake"
+  "feh"
+  "fish"
+  "flameshot"
   "git"
   "i3"
   "libfuse2"
+  "libreadline-dev"
   "nvidia-driver-570"
+  "Papirus-Dark"
+  "pasystray"
+  "pavucontrol"
+  "policykit-1-gnome"
+  "wezterm"
 )
 
 packages_picom=(
@@ -57,54 +75,132 @@ packages_dunst=(
   "libxss-dev"
 )
 
-for ppa in "${ppa_list[@]}"; do
-  sudo add-apt-repository -y "$ppa"
-done
+sys_update() {
+  sudo apt update -y && sudo apt upgrade -y
 
-/usr/lib/apt/apt-helper download-file https://debian.sur5r.net/i3/pool/main/s/sur5r-keyring/sur5r-keyring_2024.03.04_all.deb $HOME/keyring.deb SHA256:f9bb4340b5ce0ded29b7e014ee9ce788006e9bbfe31e96c09b2118ab91fca734
-sudo apt install $HOME/keyring.deb
-echo "deb http://debian.sur5r.net/i3/ $(grep '^DISTRIB_CODENAME=' /etc/lsb-release | cut -f2 -d=) universe" | sudo tee /etc/apt/sources.list.d/sur5r-i3.list
-rm -rf $HOME/keyring.deb
+  wget https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hack.zip -o $HOME/Downloads/Hack.zip
+  mkdir $HOME/.fonts
+  unzip $HOME/Downloads/Hack.zip -d $HOME/.fonts
+  fc-cache -fv
 
-# System update
-sudo apt update -y && sudo apt upgrade -y && sudo ubuntu-drivers install && snap-store --quit && sudo snap refresh snap-store
-sudo apt --purge remove -y '*nvidia*'
+  # Picom
+  cd $HOME/Downloads
+  git clone https://github.com/yshui/picom.git
+  cd picom
+  git checkout stable/12
+  meson setup --buildtype=release build
+  ninja -C build
+  sudo ninja -C build install
 
-# Install packages
-sudo apt install -y "${packages[@]}" "${packages_picom[@]}" "${packages_dunst[@]}"
-sudo snap remove firefox
-sudo apt remove -y firefox gnome-terminal gnome-text-editor dunst i3lock xss-lock
+  # Dunst
+  cd $HOME/Downloads
+  git clone https://github.com/dunst-project/dunst.git
+  cd dunst
+  make
+  sudo make install
 
-wget https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Noto.zip
-mkdir $HOME/.fonts
-unzip Noto.zip -d $HOME/.fonts
-fc-cache -fv
-rm Noto.zip
+  # Starship
+  curl -sS https://starship.rs/install.sh | sh
 
-# Picom
-cd $HOME/Downloads
-git clone https://github.com/yshui/picom.git
-cd picom
-meson setup --buildtype=release build
-ninja -C build
-sudo ninja -C build install
+  # Zed
+  curl -f https://zed.dev/install.sh | sh
 
-# Dunst
-cd $HOME/Downloads
-git clone https://github.com/dunst-project/dunst.git
-cd dunst
-make
-sudo make install
+  # Neovim
+  curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+  sudo rm -rf /opt/nvim
+  sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
 
-sudo apt autoremove -y
+  # Kubectx
+  sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
+  sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
+  sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
+  mkdir -p ~/.config/fish/completions
+  ln -s /opt/kubectx/completion/kubectx.fish ~/.config/fish/completions/
+  ln -s /opt/kubectx/completion/kubens.fish ~/.config/fish/completions/
 
-echo "Xft.dpi: 192" | tee $HOME/.Xresources
+  # fzf
+  git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
+  $HOME/.fzf/install --all
 
-sudo usermod -aG video ${USER}
+  # Clean all
+  rm -rf $HOME/Downloads/*
+}
 
-# My Dots
-cd $HOME/Downloads/
-cp -r env-config-ubuntu-i3/i3 $HOME/.config/
-cp -r env-config-ubuntu-i3/picom/ $HOME/.config/
-cp -r env-config-ubuntu-i3/dunst/ $HOME/.config/
-sudo sed -i "\$aGTK_THEME=\"Adwaita-dark\"" /etc/environment
+configure_system() {
+  for ppa in "${ppa_list[@]}"; do
+    sudo add-apt-repository -y "$ppa"
+  done
+
+  for repo in "${repositories[@]}"; do
+    IFS=' ' read -r name key_url source_parts <<< "$repo"
+    sudo wget -qO - $key_url | sudo gpg --yes --dearmor -o "/etc/apt/keyrings/${name}.gpg"
+    echo "deb [signed-by=/etc/apt/keyrings/${name}.gpg] $source_parts" | sudo tee "/etc/apt/sources.list.d/${name}.list" > /dev/null
+  done
+
+  /usr/lib/apt/apt-helper download-file https://debian.sur5r.net/i3/pool/main/s/sur5r-keyring/sur5r-keyring_2025.03.09_all.deb $HOME/Downloads/keyring.deb SHA256:2c2601e6053d5c68c2c60bcd088fa9797acec5f285151d46de9c830aaba6173c
+  sudo apt install $HOME/Downloads/keyring.deb
+  echo "deb http://debian.sur5r.net/i3/ $(grep '^DISTRIB_CODENAME=' /etc/lsb-release | cut -f2 -d=) universe" | sudo tee /etc/apt/sources.list.d/sur5r-i3.list
+
+  sudo apt update -y && sudo apt upgrade -y && sudo ubuntu-drivers install && snap-store --quit && sudo snap refresh snap-store
+  sudo apt --purge remove -y '*nvidia*'
+
+  sudo apt install -y "${packages[@]}" "${packages_picom[@]}" "${packages_dunst[@]}"
+  sudo snap remove firefox
+  sudo apt remove -y firefox gnome-terminal gnome-text-editor dunst i3lock xss-lock
+
+  sudo apt autoremove -y
+  sudo apt-mark hold nvidia-driver-570
+  echo "Xft.dpi: 192" | tee $HOME/.Xresources
+
+  sudo usermod -aG video ${USER}
+
+  wget -O $HOME/Pictures/wall.jpg https://gruvbox-wallpapers.pages.dev/wallpapers/irl/kace-rodriguez-p3OzJuT_Dks.jpg
+
+  cd $HOME/Downloads/
+  cp -r env-config-ubuntu-i3/i3 $HOME/.config/
+  cp -r env-config-ubuntu-i3/picom/ $HOME/.config/
+  cp -r env-config-ubuntu-i3/dunst/ $HOME/.config/
+  sudo sed -i "\$aGTK_THEME=\"Adwaita-dark\"" /etc/environment
+
+  # Ripgrep
+  wget https://github.com/BurntSushi/ripgrep/releases/latest/download/ripgrep_14.1.1-1_amd64.deb -o $HOME/Downloads/ripgrep_14.1.1-1_amd64.deb
+  sudo apt install $HOME/Downloads/ripgrep_14.1.1-1_amd64.deb
+
+  # Lua
+  wget https://www.lua.org/ftp/lua-5.4.7.tar.gz -o $HOME/Downloads/lua-5.4.7.tar.gz
+  tar -xvf $HOME/Downloads/lua-5.4.7.tar.gz -C $HOME/Downloads
+  cd $HOME/Downloads/lua-5.4.7
+  make all test
+  sudo make install
+
+  wget https://luarocks.github.io/luarocks/releases/luarocks-3.11.1.tar.gz -o $HOME/Downloads/luarocks-3.11.1.tar.gz
+  tar -xvf $HOME/Downloads/luarocks-3.11.1.tar.gz -C $HOME/Downloads
+  cd $HOME/Downloads/luarocks-3.11.1
+  ./configure --with-lua-include=/usr/local/include
+  make
+  sudo make install
+}
+
+show_help() {
+  echo "Usage: $0 [option]"
+  echo "Options:"
+  echo "  sysupdate    Perform a full system update (updates packages and system)."
+  echo "  configure    Configure the system (installs tools, sets dotfiles, etc.)."
+  echo "  help         Show this help message."
+}
+
+case "$1" in
+  configure)
+    configure_system
+    ;;
+  sysupdate)
+    sys_update
+    ;;
+  *)
+    echo -e "${RED}Error: Invalid option '$1'${NC}"
+    show_help
+    exit 1
+    ;;
+esac
+
+exit 0
