@@ -1,0 +1,33 @@
+MenuBar=Disabled
+
+[ContextMenu]
+ShowAddToPlaces=false
+ShowOpenInSplitView=false
+
+[DetailsMode]
+PreviewSize=16
+
+[General]
+DoubleClickViewAction=none
+OpenExternallyCalledFolderInNewTab=true
+RememberOpenedTabs=false
+ShowFullPathInTitlebar=true
+ShowZoomSlider=false
+Version=202
+ViewPropsTimestamp=2025,3,15,18,4,0.386
+
+[IconsMode]
+IconSize=16
+
+[InformationPanel]
+dateFormat=ShortFormat
+
+[KFileDialog Settings]
+Places Icons Auto-resize=false
+Places Icons Static Size=22
+
+[MainWindow]
+MenuBar=Disabled
+
+[PreviewSettings]
+Plugins=audiothumbnail,avif,blenderthumbnail,comicbookthumbnail,cursorthumbnail,djvuthumbnail,ebookthumbnail,exrthumbnail,directorythumbnail,fontthumbnail,imagethumbnail,jpegthumbnail,jxl,kraorathumbnail,windowsexethumbnail,windowsimagethumbnail,mobithumbnail,opendocumentthumbnail,gsthumbnail,rawthumbnail,svgthumbnail,gdk-pixbuf-thumbnailer,ffmpegthumbs
