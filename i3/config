@@ -8,7 +8,6 @@ focus_wrapping workspace
 exec                          --no-startup-id dex --autostart --environment i3
 exec                          --no-startup-id nm-applet
 exec                          --no-startup-id blueman-applet
-exec                          --no-startup-id pasystray
 exec                          --no-startup-id cbatticon
 exec                          --no-startup-id /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
 exec                          --no-startup-id picom -b --config $HOME/.config/picom/picom.conf
@@ -23,7 +22,8 @@ bindsym $mod+Down             exec --no-startup-id $HOME/.config/i3/single.sh
 bindsym $mod+Up               exec --no-startup-id $HOME/.config/i3/dual.sh
 bindsym $mod+Shift+Up         exec --no-startup-id $HOME/.config/i3/dual_home.sh
 bindsym $mod+Return           exec wezterm
-bindsym $mod+d                exec --no-startup-id dmenu_run
+bindsym $mod+r                exec --no-startup-id dmenu_run
+bindsym $mod+d                exec --no-startup-id i3-dmenu-desktop
 bindsym $mod+Shift+e          exec i3-msg exit
 bindsym $mod+h                move scratchpad
 bindsym $mod+Shift+h          scratchpad show
